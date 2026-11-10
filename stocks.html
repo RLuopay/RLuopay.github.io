@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>查股股 · Claude 小站</title>
+<meta name="description" content="常用行情一眼看。" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header>
+    <a class="brand" href="index.html"><span class="mark">◈</span> Claude 小站</a>
+    <nav>
+      <a href="recharge.html">充值</a>
+      <a href="logs.html">日志</a>
+      <a href="stocks.html" class="active">行情</a>
+    </nav>
+  </header>
+
+  <main>
+    <a class="back" href="index.html">← 返回首页</a>
+
+    <div class="hero">
+      <span class="eyebrow">Stocks</span>
+      <h1>顺手看一眼<br /><span class="grad">常用行情</span></h1>
+      <p class="lead">这里只是示例数字，想看实时的点下面的链接。</p>
+    </div>
+
+    <section>
+      <div class="sec-head"><h2>热门标的</h2><span>示例数据 · 非实时</span></div>
+      <div class="tickers">
+        <div class="card ticker"><div class="sym">NVDA · 英伟达</div><div class="q">$ 188.42</div><div class="chg up">▲ +2.14%</div></div>
+        <div class="card ticker"><div class="sym">AAPL · 苹果</div><div class="q">$ 236.80</div><div class="chg down">▼ -0.62%</div></div>
+        <div class="card ticker"><div class="sym">TSLA · 特斯拉</div><div class="q">$ 421.35</div><div class="chg up">▲ +1.03%</div></div>
+        <div class="card ticker"><div class="sym">000001 · 上证指数</div><div class="q">3 421.06</div><div class="chg up">▲ +0.48%</div></div>
+      </div>
+      <div class="note">想看实时行情？<a href="https://quote.eastmoney.com/" target="_blank" rel="noopener">去东方财富 →</a></div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© <span id="year">2026</span> Claude 小站</span>
+    <span>本站仅作服务说明，行情为示例数据。</span>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
