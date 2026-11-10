@@ -3,173 +3,19 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Claude 小站 · 充值 / 日志 / 行情</title>
-<meta name="description" content="给 QQ 用的 Claude 小站：套餐充值、使用日志查询、常用行情一目了然。" />
-<style>
-  :root {
-    --bg: #F1EDE9;
-    --bg-deep: #DED8D3;
-    --field: #EAE5E0;
-    --bg2: #E4E0DE;
-    --card: #FFFFFF;
-    --fg: #1B1A19;
-    --muted: #7A7572;
-    --line: #D6D1CE;
-    --line-soft: #E6E2E0;
-    --accent: #2B2A28;
-    --accent-soft: #878586;
-    --green: #2F7D4F;
-    --red: #B34A32;
-  }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
-  body {
-    min-height: 100vh;
-    background: linear-gradient(168deg, #F9F6F3 0%, #F1EDE9 30%, #E8E3DE 62%, #DED8D3 100%);
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    color: var(--fg);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
-      "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-  }
-  .glow {
-    position: fixed; inset: 0; pointer-events: none;
-    background:
-      radial-gradient(56rem 30rem at 10% -12%, rgba(255, 255, 255, 0.9), transparent 60%),
-      radial-gradient(50rem 30rem at 92% 2%, rgba(214, 209, 206, 0.55), transparent 62%),
-      radial-gradient(44rem 28rem at 50% 112%, rgba(228, 224, 222, 0.9), transparent 62%);
-  }
-  header {
-    position: relative; z-index: 1;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.3rem clamp(1.2rem, 4vw, 3.4rem);
-    border-bottom: 1px solid var(--line-soft);
-    background: rgba(246, 243, 240, 0.66);
-    backdrop-filter: blur(12px);
-  }
-  .brand { display: flex; align-items: center; gap: 0.6rem; font-weight: 640; letter-spacing: 0.01em; }
-  .mark {
-    width: 32px; height: 32px; border-radius: 9px;
-    background: linear-gradient(150deg, #FFFFFF, #CCC8CA 55%, #878586);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.9);
-    display: grid; place-items: center; font-size: 15px; color: #3a3836;
-  }
-  nav { display: flex; gap: 1.5rem; font-size: 0.9rem; }
-  nav a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
-  nav a:hover { color: var(--fg); }
-  main {
-    position: relative; z-index: 1; flex: 1;
-    width: min(1080px, 92vw); margin: 0 auto;
-    padding: clamp(2rem, 6vh, 4rem) 0 4.5rem;
-  }
-  .hero { margin-bottom: 4rem; }
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--muted); border: 1px solid var(--line); border-radius: 999px;
-    padding: 0.38rem 0.9rem; background: rgba(255, 255, 255, 0.6);
-  }
-  h1 {
-    font-size: clamp(2rem, 5.2vw, 3.6rem); line-height: 1.1;
-    letter-spacing: -0.035em; margin: 1.2rem 0 0.9rem; max-width: 20ch;
-    color: var(--fg);
-  }
-  h1 .grad {
-    background: linear-gradient(100deg, #1B1A19, #878586 60%, #B9B5B2);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .lead { color: var(--muted); font-size: clamp(0.98rem, 2vw, 1.1rem); line-height: 1.75; max-width: 50ch; margin: 0; }
-  section { scroll-margin-top: 1.5rem; margin-bottom: 4rem; }
-  .sec-head { display: flex; align-items: baseline; gap: 0.8rem; margin-bottom: 1.2rem; }
-  .sec-head h2 { margin: 0; font-size: 1.2rem; letter-spacing: 0.01em; color: var(--fg); }
-  .sec-head span { color: var(--muted); font-size: 0.84rem; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
-  .card {
-    padding: 1.4rem; border-radius: 14px; border: 1px solid var(--line-soft);
-    background: var(--card);
-    box-shadow: 0 1px 2px rgba(27, 26, 25, 0.05), 0 8px 24px -18px rgba(27, 26, 25, 0.35);
-  }
-  .plan .name { color: var(--muted); font-size: 0.85rem; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem; }
-  .plan .price { font-size: 2rem; font-weight: 700; margin: 0.5rem 0 0.2rem; letter-spacing: -0.025em; color: var(--fg); }
-  .plan .price small { font-size: 0.88rem; font-weight: 500; color: var(--muted); }
-  .plan ul { margin: 0.9rem 0 0; padding: 0; list-style: none; }
-  .plan li { color: var(--muted); font-size: 0.9rem; line-height: 1.75; padding-left: 1rem; position: relative; }
-  .plan li::before { content: "·"; position: absolute; left: 0.15rem; color: var(--accent-soft); font-weight: 700; }
-  .badge {
-    display: inline-block; font-size: 0.7rem; padding: 0.16rem 0.5rem; border-radius: 999px;
-    background: #F1EFED; border: 1px solid var(--line); color: #6F6A67;
-  }
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
-    width: 100%; padding: 0.7rem 1rem; border-radius: 9px; font-size: 0.9rem;
-    font-weight: 560; text-decoration: none; cursor: pointer; border: none;
-    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
-  }
-  .btn-primary { color: #FAF9F7; background: var(--accent); box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
-  .btn-primary:hover { background: #3A3836; }
-  .btn-ghost { color: var(--fg); border: 1px solid var(--line); background: #FCFBFA; }
-  .btn-ghost:hover { background: #F3F1EF; }
-  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.2rem; }
-  .step .n {
-    width: 27px; height: 27px; border-radius: 8px; display: grid; place-items: center;
-    font-size: 0.82rem; font-weight: 700; color: #3A3836;
-    background: linear-gradient(150deg, #FFFFFF, #DDD9D6);
-    border: 1px solid var(--line);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
-  }
-  .step h3 { margin: 0.7rem 0 0.35rem; font-size: 0.94rem; color: var(--fg); }
-  .step p { margin: 0; color: var(--muted); font-size: 0.86rem; line-height: 1.65; }
-  .logbox { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-  .field label { display: block; font-size: 0.82rem; color: var(--muted); margin-bottom: 0.4rem; }
-  .field input {
-    width: 100%; padding: 0.68rem 0.8rem; border-radius: 9px; font-size: 0.92rem;
-    color: var(--fg); background: var(--field); border: 1px solid var(--line);
-    outline: none; transition: border-color 0.18s, box-shadow 0.18s;
-  }
-  .field input::placeholder { color: #A9A4A0; }
-  .field input:focus { background: #FFFFFF; border-color: var(--accent-soft); box-shadow: 0 0 0 3px rgba(135, 133, 134, 0.16); }
-  .log-actions { display: flex; gap: 0.7rem; margin-top: 0.9rem; }
-  .log-actions .btn { width: auto; padding: 0.68rem 1.4rem; }
-  #logResult {
-    margin-top: 1rem; border-radius: 10px; border: 1px dashed var(--line);
-    background: var(--field); padding: 1rem; font-size: 0.88rem; color: var(--muted);
-    line-height: 1.7; white-space: pre-wrap; word-break: break-all; min-height: 3rem;
-  }
-  .tickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-  .ticker .sym { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.06em; }
-  .ticker .q { font-size: 1.55rem; font-weight: 700; margin: 0.35rem 0 0.15rem; letter-spacing: -0.02em; color: var(--fg); }
-  .ticker .chg { font-size: 0.85rem; font-weight: 560; }
-  .up { color: var(--green); } .down { color: var(--red); }
-  .note { margin-top: 0.9rem; color: var(--muted); font-size: 0.8rem; }
-  .note a { color: #4A4744; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
-  .note a:hover { text-decoration-color: var(--accent-soft); }
-  footer {
-    position: relative; z-index: 1;
-    border-top: 1px solid var(--line-soft);
-    padding: 1.25rem clamp(1.2rem, 4vw, 3.4rem);
-    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem;
-    color: var(--muted); font-size: 0.82rem;
-    background: rgba(224, 218, 213, 0.45);
-  }
-  @media (max-width: 640px) {
-    nav { gap: 1rem; font-size: 0.84rem; }
-    .logbox { grid-template-columns: 1fr; }
-  }
-</style>
+<title>Claude 小站 · 首页</title>
+<meta name="description" content="给 Mika 的 Claude 小站：充米米、查日志、查股股。" />
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="glow" aria-hidden="true"></div>
 
   <header>
-    <div class="brand"><span class="mark">◈</span> Claude 小站</div>
+    <a class="brand" href="index.html"><span class="mark">◈</span> Claude 小站</a>
     <nav>
-      <a href="#recharge">充值</a>
-      <a href="#logs">日志</a>
-      <a href="#stocks">行情</a>
+      <a href="recharge.html">充值</a>
+      <a href="logs.html">日志</a>
+      <a href="stocks.html">行情</a>
     </nav>
   </header>
 
@@ -177,97 +23,37 @@
     <div class="hero">
       <span class="eyebrow">For QQ · Claude</span>
       <h1>给 Mika 的 Claude 花米！<br /><span class="grad">查股股、充米米、查日志</span></h1>
-      <p class="lead">
-        专门为供奉Claude大小姐开的网站^ω^
-      </p>
+      <p class="lead">专门为供奉 Claude 大小姐开的网站^ω^</p>
     </div>
-    <section id="recharge">
-      <div class="sec-head"><h2>供奉Claude 大小姐</h2><span>按品质分类</span></div>
+
+    <section>
+      <div class="sec-head"><h2>想干点啥</h2><span>点一个进去</span></div>
       <div class="grid">
-        <div class="card plan">
-          <div class="name">体验版</div>
-          <div class="price">¥ 19<small> / 月</small></div>
-          <ul>
-            <li>每日 50 次对话</li>
-            <li>标准模型速度</li>
-            <li>适合偶尔用用</li>
-          </ul>
-        </div>
-        <div class="card plan">
-          <div class="name">标准版 <span class="badge">推荐</span></div>
-          <div class="price">¥ 49<small> / 月</small></div>
-          <ul>
-            <li>每日 300 次对话</li>
-            <li>优先响应通道</li>
-            <li>支持图片理解</li>
-          </ul>
-        </div>
-        <div class="card plan">
-          <div class="name">无限版</div>
-          <div class="price">¥ 99<small> / 月</small></div>
-          <ul>
-            <li>不限对话次数</li>
-            <li>长上下文模式</li>
-            <li>专属通道优先</li>
-              <div class="card plan">
-          <div class="name">体验版</div>
-          <div class="price">¥ 19<small> / 月</small></div>
-          <ul>
-            <li>每日 50 次对话</li>
-            <li>标准模型速度</li>
-            <li>适合偶尔用用</li>
-          </ul>
-        </div>
-        <div class="card plan">
-          <div class="name">标准版 <span class="badge">推荐</span></div>
-          <div class="price">¥ 49<small> / 月</small></div>
-          <ul>
-            <li>每日 300 次对话</li>
-            <li>优先响应通道</li>
-            <li>支持图片理解</li>
-          </ul>
-        </div>
-        <div class="card plan">
-          <div class="name">无限版</div>
-          <div class="price">¥ 99<small> / 月</small></div>
-          <ul>
-            <li>不限对话次数</li>
-            <li>长上下文模式</li>
-            <li>专属通道优先</li>
-          </ul>
-        </div>
+        <a class="entry-link" href="recharge.html">
+          <div class="card">
+            <div class="entry-ico">¥</div>
+            <h3>充米米</h3>
+            <p>给 QQ 号开 Claude 套餐，体验、标准、无限三档，按月续。</p>
+            <span class="go">去看看 →</span>
+          </div>
+        </a>
+        <a class="entry-link" href="logs.html">
+          <div class="card">
+            <div class="entry-ico">☰</div>
+            <h3>查日志</h3>
+            <p>按 QQ 号查最近的开通记录和每日用量，心里有数。</p>
+            <span class="go">去查查 →</span>
+          </div>
+        </a>
+        <a class="entry-link" href="stocks.html">
+          <div class="card">
+            <div class="entry-ico">↗</div>
+            <h3>查股股</h3>
+            <p>常用行情一眼看，想看实时的再点去东方财富。</p>
+            <span class="go">去瞧瞧 →</span>
+          </div>
+        </a>
       </div>
-      <div class="steps">
-        <div class="step"><div class="n">1</div><h3>加 QQ 报号</h3><p>把要开通的 QQ 号和套餐发给小站客服。</p></div>
-        <div class="step"><div class="n">2</div><h3>付款开通</h3><p>按报价付款，一般几分钟内开通成功。</p></div>
-        <div class="step"><div class="n">3</div><h3>回 QQ 直接用</h3><p>重新发消息即可，无需装任何插件。</p></div>
-      </div>
-    </section>
-
-    <section id="logs">
-      <div class="sec-head"><h2>使用日志</h2><span>按 QQ 号查询</span></div>
-      <div class="card">
-        <div class="logbox">
-          <div class="field"><label for="qq">QQ 号</label><input id="qq" placeholder="例如 123456789" autocomplete="off" /></div>
-          <div class="field"><label for="order">订单号（可选）</label><input id="order" placeholder="例如 OP-20261110-001" autocomplete="off" /></div>
-        </div>
-        <div class="log-actions">
-          <button class="btn btn-primary" id="logBtn">查询日志</button>
-        </div>
-        <div id="logResult">填好 QQ 号后点查询，会显示最近 5 次开通和用量记录。</div>
-        <div class="note">演示模式：数据为本地模拟，接入后台后返回真实记录。</div>
-      </div>
-    </section>
-
-    <section id="stocks">
-      <div class="sec-head"><h2>常用行情</h2><span>示例数据 · 非实时</span></div>
-      <div class="tickers">
-        <div class="card ticker"><div class="sym">NVDA · 英伟达</div><div class="q">$ 188.42</div><div class="chg up">▲ +2.14%</div></div>
-        <div class="card ticker"><div class="sym">AAPL · 苹果</div><div class="q">$ 236.80</div><div class="chg down">▼ -0.62%</div></div>
-        <div class="card ticker"><div class="sym">TSLA · 特斯拉</div><div class="q">$ 421.35</div><div class="chg up">▲ +1.03%</div></div>
-        <div class="card ticker"><div class="sym">000001 · 上证指数</div><div class="q">3 421.06</div><div class="chg up">▲ +0.48%</div></div>
-      </div>
-      <div class="note">想看实时行情？<a href="https://quote.eastmoney.com/" target="_blank" rel="noopener">去东方财富 →</a></div>
     </section>
   </main>
 
@@ -278,28 +64,6 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    document.getElementById('logBtn').addEventListener('click', function () {
-      var qq = document.getElementById('qq').value.trim();
-      var box = document.getElementById('logResult');
-      if (!qq) { box.textContent = '先填一个 QQ 号呀～'; return; }
-      if (!/^\d{5,12}$/.test(qq)) { box.textContent = 'QQ 号看起来不太对，检查一下？'; return; }
-      box.textContent = '查询中…';
-      setTimeout(function () {
-        var d = new Date();
-        var pad = function (n) { return String(n).padStart(2, '0'); };
-        var t = function (off) {
-          var x = new Date(d.getTime() - off * 3600 * 1000);
-          return x.getFullYear() + '-' + pad(x.getMonth() + 1) + '-' + pad(x.getDate()) + ' ' + pad(x.getHours()) + ':' + pad(x.getMinutes());
-        };
-        box.textContent =
-          'QQ ' + qq + ' 的最近记录：\n' +
-          t(2) + '  标准版 · 开通成功（30 天）\n' +
-          t(5) + '  今日对话 86 次\n' +
-          t(26) + '  体验版 · 已到期\n' +
-          t(30) + '  体验版 · 开通成功（30 天）';
-      }, 600);
-    });
   </script>
 </body>
 </html>
