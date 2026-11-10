@@ -294,3 +294,8 @@ footer {
 
 /* pet position: shift right ~1.5cm */
 .hero-pet { margin-right: clamp(1rem, 4vw, 4rem); }
+
+/* pet size matched to user red lines (~214px) */
+.hero-pet { width: 222px; }
+.pet { width: 210px; height: 214px; }
+.pet-shadow { width: 132px; }
