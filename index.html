@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OnlinePay AI</title>
+<meta name="description" content="OnlinePay AI — 智能支付基础设施" />
+<style>
+  :root {
+    --bg: #070b16;
+    --fg: #e8eefc;
+    --muted: #93a1bd;
+    --line: rgba(148, 170, 210, 0.16);
+    --accent: #4f8bff;
+    --accent2: #8d5cff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+      "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+  .glow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(60rem 32rem at 15% -10%, rgba(79, 139, 255, 0.22), transparent 60%),
+      radial-gradient(48rem 30rem at 95% 8%, rgba(141, 92, 255, 0.18), transparent 62%),
+      radial-gradient(40rem 26rem at 50% 110%, rgba(46, 204, 190, 0.10), transparent 60%);
+  }
+  header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.4rem clamp(1.2rem, 4vw, 3.4rem);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 650;
+    letter-spacing: 0.02em;
+  }
+  .mark {
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    background: linear-gradient(140deg, var(--accent), var(--accent2));
+    box-shadow: 0 8px 24px rgba(79, 139, 255, 0.35);
+    display: grid; place-items: center;
+    font-size: 17px;
+  }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.92rem;
+    margin-left: 1.4rem;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--fg); }
+  main {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    width: min(1080px, 92vw);
+    margin: 0 auto;
+    padding: clamp(2.5rem, 8vh, 6rem) 0 4rem;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.42rem 0.9rem;
+    background: rgba(255, 255, 255, 0.02);
+  }
+  h1 {
+    font-size: clamp(2.2rem, 6vw, 4.2rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin: 1.4rem 0 1rem;
+    max-width: 18ch;
+  }
+  h1 .grad {
+    background: linear-gradient(100deg, #7fb0ff, #b79dff 55%, #6fe6d8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .lead {
+    color: var(--muted);
+    font-size: clamp(1rem, 2.2vw, 1.15rem);
+    line-height: 1.75;
+    max-width: 46ch;
+    margin: 0 0 2.2rem;
+  }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-bottom: 4rem; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.82rem 1.5rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 560;
+    text-decoration: none;
+    transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+  }
+  .btn-primary {
+    color: #fff;
+    background: linear-gradient(120deg, var(--accent), var(--accent2));
+    box-shadow: 0 10px 30px rgba(79, 139, 255, 0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 38px rgba(79, 139, 255, 0.42); }
+  .btn-ghost {
+    color: var(--fg);
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .btn-ghost:hover { background: rgba(255, 255, 255, 0.07); }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.1rem;
+  }
+  .card {
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+    backdrop-filter: blur(8px);
+  }
+  .card h3 { margin: 0.9rem 0 0.5rem; font-size: 1.02rem; letter-spacing: 0.01em; }
+  .card p { margin: 0; color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+  .ico {
+    width: 40px; height: 40px;
+    border-radius: 11px;
+    display: grid; place-items: center;
+    font-size: 19px;
+    background: rgba(79, 139, 255, 0.14);
+    border: 1px solid rgba(79, 139, 255, 0.28);
+  }
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--line);
+    padding: 1.4rem clamp(1.2rem, 4vw, 3.4rem);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    color: var(--muted);
+    font-size: 0.84rem;
+  }
+  @media (max-width: 640px) {
+    nav { display: none; }
+    footer { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header>
+    <div class="brand"><span class="mark">◈</span> OnlinePay AI</div>
+    <nav>
+      <a href="#features">能力</a>
+      <a href="#contact">联系</a>
+    </nav>
+  </header>
+
+  <main>
+    <span class="eyebrow">Infrastructure · AI Native</span>
+    <h1>让支付像<br /><span class="grad">对话一样自然</span></h1>
+    <p class="lead">
+      面向 AI 应用的支付基础设施：一次接入，完成订阅、按量计费与全球收单，
+      把复杂的账务和合规交给底层。
+    </p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#contact">开始接入</a>
+      <a class="btn btn-ghost" href="#features">了解能力</a>
+    </div>
+
+    <section id="features" class="grid">
+      <div class="card">
+        <div class="ico">⚡</div>
+        <h3>分钟级接入</h3>
+        <p>一套 API 覆盖订阅、用量计费与退款，SDK 多语言，当天即可上线。</p>
+      </div>
+      <div class="card">
+        <div class="ico">🌍</div>
+        <h3>全球收单</h3>
+        <p>多币种、多支付方式，自动路由最优通道，提升跨境支付成功率。</p>
+      </div>
+      <div class="card">
+        <div class="ico">🛡️</div>
+        <h3>合规省心</h3>
+        <p>内置风控与对账能力，交易数据可追溯，减少人工核对成本。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <span>© <span id="year">2026</span> OnlinePay AI</span>
+    <span>hello@onlinepay-ai-ch.js.org</span>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
