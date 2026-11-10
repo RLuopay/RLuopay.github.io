@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>充米米 · Claude 小站</title>
+<meta name="description" content="Claude 套餐价格与开通流程。" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header>
+    <a class="brand" href="index.html"><span class="mark">◈</span> Claude 小站</a>
+    <nav>
+      <a href="recharge.html" class="active">充值</a>
+      <a href="logs.html">日志</a>
+      <a href="stocks.html">行情</a>
+    </nav>
+  </header>
+
+  <main>
+    <a class="back" href="index.html">← 返回首页</a>
+
+    <div class="hero">
+      <span class="eyebrow">Recharge</span>
+      <h1>供奉 Claude 大小姐<br /><span class="grad">按月挑一档就好</span></h1>
+      <p class="lead">三档按日用次数分，随时可以停，不绑长周期。</p>
+    </div>
+
+    <section>
+      <div class="sec-head"><h2>供奉 Claude 大小姐</h2><span>按品质分类</span></div>
+      <div class="grid">
+        <div class="card plan">
+          <div class="name">体验版</div>
+          <div class="price">¥ 19<small> / 月</small></div>
+          <ul>
+            <li>每日 50 次对话</li>
+            <li>标准模型速度</li>
+            <li>适合偶尔用用</li>
+          </ul>
+        </div>
+        <div class="card plan">
+          <div class="name">标准版 <span class="badge">推荐</span></div>
+          <div class="price">¥ 49<small> / 月</small></div>
+          <ul>
+            <li>每日 300 次对话</li>
+            <li>优先响应通道</li>
+            <li>支持图片理解</li>
+          </ul>
+        </div>
+        <div class="card plan">
+          <div class="name">无限版</div>
+          <div class="price">¥ 99<small> / 月</small></div>
+          <ul>
+            <li>不限对话次数</li>
+            <li>长上下文模式</li>
+            <li>专属通道优先</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head"><h2>怎么开通</h2><span>三步就完事</span></div>
+      <div class="steps">
+        <div class="step"><div class="n">1</div><h3>加 QQ 报号</h3><p>把要开通的 QQ 号和套餐发给小站客服。</p></div>
+        <div class="step"><div class="n">2</div><h3>付款开通</h3><p>按报价付款，一般几分钟内开通成功。</p></div>
+        <div class="step"><div class="n">3</div><h3>回 QQ 直接用</h3><p>重新发消息即可，无需装任何插件。</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© <span id="year">2026</span> Claude 小站</span>
+    <span>本站仅作服务说明，行情为示例数据。</span>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
