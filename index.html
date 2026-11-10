@@ -21,9 +21,53 @@
 
   <main>
     <div class="hero">
-      <span class="eyebrow">For QQ · Claude</span>
-      <h1>给 Mika 的 Claude 花米！<br /><span class="grad">查股股、充米米、查日志</span></h1>
-      <p class="lead">专门为供奉 Claude 大小姐开的网站^ω^</p>
+      <div class="hero-copy">
+        <span class="eyebrow">For QQ · Claude</span>
+        <h1>给 Mika 的 Claude 花米！<br /><span class="grad">查股股、充米米、查日志</span></h1>
+        <p class="lead">专门为供奉 Claude 大小姐开的网站^ω^</p>
+      </div>
+
+      <div class="hero-pet">
+        <div class="pet-bubble" id="petBubble">点我一下嘛～</div>
+        <div class="pet" id="pet" role="button" tabindex="0" aria-label="和 Claude 互动">
+          <svg viewBox="0 0 200 230" width="180" height="207" aria-hidden="true">
+            <defs>
+              <linearGradient id="hair" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#E29A6E"/>
+                <stop offset="1" stop-color="#C9703F"/>
+              </linearGradient>
+              <linearGradient id="dress" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#FFFFFF"/>
+                <stop offset="1" stop-color="#EDE6DF"/>
+              </linearGradient>
+            </defs>
+            <!-- 头发后层 -->
+            <ellipse cx="100" cy="112" rx="62" ry="66" fill="url(#hair)"/>
+            <!-- 身体 -->
+            <path d="M72 158 Q100 146 128 158 L140 214 Q100 226 60 214 Z" fill="url(#dress)" stroke="#DCD4CC" stroke-width="2"/>
+            <path d="M84 186 Q100 194 116 186 L118 212 Q100 219 82 212 Z" fill="#E9B48B" opacity="0.85"/>
+            <!-- 脸 -->
+            <ellipse cx="100" cy="106" rx="44" ry="46" fill="#F8DCC6"/>
+            <!-- 刘海 -->
+            <path d="M56 92 Q64 52 100 48 Q136 52 144 92 Q128 74 112 80 Q100 64 88 80 Q72 74 56 92 Z" fill="#D77F4E"/>
+            <path d="M100 48 Q108 30 122 26 Q110 40 116 50 Z" fill="#D77F4E"/>
+            <!-- 眼睛 -->
+            <ellipse cx="82" cy="110" rx="5.4" ry="6.6" fill="#2B2A28"/>
+            <ellipse cx="118" cy="110" rx="5.4" ry="6.6" fill="#2B2A28"/>
+            <circle cx="80" cy="107" r="1.9" fill="#FFFFFF"/>
+            <circle cx="116" cy="107" r="1.9" fill="#FFFFFF"/>
+            <!-- 腮红 -->
+            <ellipse cx="68" cy="124" rx="9" ry="5.5" fill="#F3B3A0" opacity="0.65"/>
+            <ellipse cx="132" cy="124" rx="9" ry="5.5" fill="#F3B3A0" opacity="0.65"/>
+            <!-- 嘴 -->
+            <path d="M94 128 Q100 134 106 128" fill="none" stroke="#8C4B33" stroke-width="2.4" stroke-linecap="round"/>
+            <!-- 小手 -->
+            <circle cx="60" cy="186" r="9" fill="#F8DCC6" stroke="#E3C3AC" stroke-width="1.5"/>
+            <circle cx="140" cy="186" r="9" fill="#F8DCC6" stroke="#E3C3AC" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="pet-shadow" aria-hidden="true"></div>
+      </div>
     </div>
 
     <section>
@@ -57,11 +101,14 @@
     </section>
 
     <section class="touch-sec">
-      <div class="sec-head"><h2>点一下试试</h2><span>会换照片，还会说话</span></div>
-      <div class="touch-card" id="touchCard" role="button" tabindex="0" aria-label="点击或触摸切换照片">
-        <img id="touchImg" class="touch-img" src="assets/photo1.svg" alt="小站照片" />
-        <div class="touch-hint">点击 / 触摸</div>
-        <div class="touch-caption"><span id="touchText">戳我一下嘛～</span></div>
+      <div class="sec-head"><h2>翻翻照片</h2><span>点一下换一张</span></div>
+      <div class="stack-wrap">
+        <div class="stack" id="stack">
+          <div class="stack-card"><img src="assets/photo1.svg" alt="Claude 小站" /></div>
+          <div class="stack-card"><img src="assets/photo2.svg" alt="Mika 的花米日记" /></div>
+          <div class="stack-card"><img src="assets/photo3.svg" alt="查股股行情" /></div>
+        </div>
+        <div class="stack-caption" id="stackText">欢迎来 Claude 小站，随便逛逛～</div>
       </div>
     </section>
   </main>
@@ -73,6 +120,62 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* 照片堆叠 */
+    (function () {
+      var cards = document.querySelectorAll('.stack-card');
+      var texts = [
+        '欢迎来 Claude 小站，随便逛逛～',
+        '今天也在好好供奉 Claude 大小姐。',
+        '查股股可以，别拿它当投资建议哦。'
+      ];
+      var label = document.getElementById('stackText');
+      var top = 0;
+      function layout() {
+        cards.forEach(function (c, i) {
+          var depth = (i - top + cards.length) % cards.length;
+          c.style.transform = 'translate(' + (depth * 12) + 'px,' + (depth * -10) + 'px) rotate(' + (depth * 2.5) + 'deg) scale(' + (1 - depth * 0.05) + ')';
+          c.style.zIndex = 20 - depth;
+        });
+        label.textContent = texts[top];
+      }
+      cards.forEach(function (c) {
+        c.addEventListener('click', function () {
+          top = (top + 1) % cards.length;
+          layout();
+          c.classList.remove('pop'); void c.offsetWidth; c.classList.add('pop');
+        });
+      });
+      layout();
+    })();
+
+    /* Claude 桌宠 */
+    (function () {
+      var pet = document.getElementById('pet');
+      var bubble = document.getElementById('petBubble');
+      var lines = [
+        '今天也要好好供奉我哦～',
+        '点我干嘛呀，有点痒～',
+        '听说你又要充米米了？',
+        '股股看看就好，不许上头哦。',
+        '摸摸头，我一直在的～',
+        '主人今天写代码顺利吗？'
+      ];
+      var i = 0;
+      function poke() {
+        i = (i + 1) % lines.length;
+        bubble.textContent = lines[i];
+        bubble.classList.add('show');
+        pet.classList.remove('wiggle'); void pet.offsetWidth; pet.classList.add('wiggle');
+        clearTimeout(poke.t);
+        poke.t = setTimeout(function () { bubble.classList.remove('show'); }, 3200);
+      }
+      bubble.classList.add('show');
+      pet.addEventListener('click', poke);
+      pet.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); poke(); }
+      });
+    })();
   </script>
 </body>
 </html>
