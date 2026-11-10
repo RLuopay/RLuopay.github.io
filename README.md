@@ -1,2 +1,21 @@
-# redmoon9388-tech.github.io
-Site for onlinepay-ai-ch.js.org
+# Claude 小站
+
+给 QQ 用的 Claude 服务页面：充值套餐、使用日志查询、常用行情。
+
+## 功能
+
+- **充值**：体验 / 标准 / 无限三档套餐，QQ 联系开通
+- **日志**：按 QQ 号查询开通与用量记录（当前为前端演示，接后台后返回真实数据）
+- **行情**：常用股票行情示例，附东方财富实时链接
+
+## 访问
+
+<https://rluopay.github.io>
+
+## 本地预览
+
+直接用浏览器打开 `index.html` 即可，无构建步骤。
+
+## 更新站点
+
+修改 `index.html` 后提交到 `main` 分支，GitHub Pages 会自动重新发布（约 1 分钟）。
