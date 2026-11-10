@@ -338,3 +338,39 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   .pet, .pet-shadow { animation: none; }
 }
+
+/* smoother idle float: composite-only, no per-frame shadow */
+.pet {
+  filter: none;
+  transition: none;
+  animation: floaty 3.4s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+@keyframes floaty {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -7px, 0); }
+}
+.pet-img { will-change: transform; }
+.pet-shadow { animation: none; opacity: 0.9; }
+
+/* landscape prompt on phones / small screens */
+.rotate-tip { display: none; }
+@media (max-width: 900px) and (orientation: portrait) {
+  .rotate-tip {
+    display: grid; place-items: center;
+    position: fixed; inset: 0; z-index: 999;
+    background: rgba(27, 26, 25, 0.94);
+    color: #FAF9F7; text-align: center;
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  }
+  .rotate-box { padding: 2rem 1.5rem; }
+  .rotate-icon { font-size: 3rem; line-height: 1; margin-bottom: 1.1rem; animation: rot 2.4s ease-in-out infinite; }
+  .rotate-box p { margin: 0 0 0.4rem; font-size: 1.05rem; letter-spacing: 0.06em; }
+  .rotate-box span { font-size: 0.82rem; color: rgba(250, 249, 247, 0.6); }
+  @keyframes rot {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(90deg); }
+  }
+}
