@@ -291,3 +291,6 @@ footer {
 /* pet position: a bit toward center */
 .hero-pet { margin-right: clamp(2rem, 9vw, 10rem); }
 @media (max-width: 820px) { .hero-pet { margin-right: auto; } }
+
+/* pet position: shift right ~1.5cm */
+.hero-pet { margin-right: clamp(1rem, 4vw, 4rem); }
