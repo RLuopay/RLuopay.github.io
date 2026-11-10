@@ -322,3 +322,19 @@ footer {
     border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
     border-top: none; border-left: none; }
 }
+
+/* idle floating */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+.pet { animation: floaty 3.4s ease-in-out infinite; }
+.pet.wiggle { animation: wiggle 0.5s ease-in-out; }
+.pet-shadow { animation: shadowy 3.4s ease-in-out infinite; }
+@keyframes shadowy {
+  0%, 100% { transform: scaleX(1); opacity: 1; }
+  50% { transform: scaleX(0.92); opacity: 0.75; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pet, .pet-shadow { animation: none; }
+}
