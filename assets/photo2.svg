@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#EDE7E1"/>
+      <stop offset="0.5" stop-color="#D8D1CA"/>
+      <stop offset="1" stop-color="#AFA8A2"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#g2)"/>
+  <path d="M0 560 Q 300 470 600 540 T 1200 500 L1200 675 L0 675 Z" fill="#FFFFFF" opacity="0.28"/>
+  <path d="M0 620 Q 340 540 680 610 T 1200 570 L1200 675 L0 675 Z" fill="#FFFFFF" opacity="0.22"/>
+  <text x="110" y="300" font-family="-apple-system, PingFang SC, sans-serif" font-size="80" font-weight="700" fill="#2B2A28">Mika 的花米日记</text>
+  <text x="114" y="376" font-family="-apple-system, PingFang SC, sans-serif" font-size="32" fill="#6F6A66">今天也在好好供奉 Claude 大小姐</text>
+</svg>
