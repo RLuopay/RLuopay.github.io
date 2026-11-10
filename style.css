@@ -171,3 +171,32 @@ footer {
   nav { gap: 1rem; font-size: 0.84rem; }
   .logbox { grid-template-columns: 1fr; }
 }
+
+.touch-sec { margin-top: 3.2rem; }
+.touch-card {
+  position: relative; border-radius: 18px; overflow: hidden;
+  border: 1px solid var(--line-soft); background: var(--card);
+  box-shadow: 0 1px 2px rgba(27, 26, 25, 0.06), 0 18px 40px -24px rgba(27, 26, 25, 0.45);
+  cursor: pointer; outline: none; user-select: none;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.touch-card:hover { box-shadow: 0 2px 4px rgba(27, 26, 25, 0.08), 0 22px 48px -22px rgba(27, 26, 25, 0.5); transform: translateY(-2px); }
+.touch-card:focus-visible { box-shadow: 0 0 0 3px rgba(135, 133, 134, 0.3); }
+.touch-img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.touch-img.pop { animation: pop 0.35s ease-out; }
+.touch-hint {
+  position: absolute; top: 0.9rem; right: 0.9rem;
+  font-size: 0.7rem; letter-spacing: 0.12em;
+  padding: 0.28rem 0.62rem; border-radius: 999px;
+  color: #4A4744; background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+.touch-caption {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 2.6rem 1.4rem 1.2rem;
+  background: linear-gradient(transparent, rgba(27, 26, 25, 0.55));
+  color: #FFFFFF; font-size: 1rem; line-height: 1.6;
+}
+.touch-caption span.pop { animation: rise 0.3s ease-out; display: inline-block; }
+@keyframes pop { 0% { opacity: 0.35; transform: scale(1.025); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes rise { 0% { opacity: 0; transform: translateY(6px); } 100% { opacity: 1; transform: translateY(0); } }
