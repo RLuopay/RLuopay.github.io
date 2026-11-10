@@ -28,43 +28,9 @@
       </div>
 
       <div class="hero-pet">
-        <div class="pet-bubble" id="petBubble">点我一下嘛～</div>
+        <div class="pet-bubble" id="petBubble">有事就戳我一下～</div>
         <div class="pet" id="pet" role="button" tabindex="0" aria-label="和 Claude 互动">
-          <svg viewBox="0 0 200 230" width="180" height="207" aria-hidden="true">
-            <defs>
-              <linearGradient id="hair" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#E29A6E"/>
-                <stop offset="1" stop-color="#C9703F"/>
-              </linearGradient>
-              <linearGradient id="dress" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#FFFFFF"/>
-                <stop offset="1" stop-color="#EDE6DF"/>
-              </linearGradient>
-            </defs>
-            <!-- 头发后层 -->
-            <ellipse cx="100" cy="112" rx="62" ry="66" fill="url(#hair)"/>
-            <!-- 身体 -->
-            <path d="M72 158 Q100 146 128 158 L140 214 Q100 226 60 214 Z" fill="url(#dress)" stroke="#DCD4CC" stroke-width="2"/>
-            <path d="M84 186 Q100 194 116 186 L118 212 Q100 219 82 212 Z" fill="#E9B48B" opacity="0.85"/>
-            <!-- 脸 -->
-            <ellipse cx="100" cy="106" rx="44" ry="46" fill="#F8DCC6"/>
-            <!-- 刘海 -->
-            <path d="M56 92 Q64 52 100 48 Q136 52 144 92 Q128 74 112 80 Q100 64 88 80 Q72 74 56 92 Z" fill="#D77F4E"/>
-            <path d="M100 48 Q108 30 122 26 Q110 40 116 50 Z" fill="#D77F4E"/>
-            <!-- 眼睛 -->
-            <ellipse cx="82" cy="110" rx="5.4" ry="6.6" fill="#2B2A28"/>
-            <ellipse cx="118" cy="110" rx="5.4" ry="6.6" fill="#2B2A28"/>
-            <circle cx="80" cy="107" r="1.9" fill="#FFFFFF"/>
-            <circle cx="116" cy="107" r="1.9" fill="#FFFFFF"/>
-            <!-- 腮红 -->
-            <ellipse cx="68" cy="124" rx="9" ry="5.5" fill="#F3B3A0" opacity="0.65"/>
-            <ellipse cx="132" cy="124" rx="9" ry="5.5" fill="#F3B3A0" opacity="0.65"/>
-            <!-- 嘴 -->
-            <path d="M94 128 Q100 134 106 128" fill="none" stroke="#8C4B33" stroke-width="2.4" stroke-linecap="round"/>
-            <!-- 小手 -->
-            <circle cx="60" cy="186" r="9" fill="#F8DCC6" stroke="#E3C3AC" stroke-width="1.5"/>
-            <circle cx="140" cy="186" r="9" fill="#F8DCC6" stroke="#E3C3AC" stroke-width="1.5"/>
-          </svg>
+          <img class="pet-img" id="petImg" src="assets/pet/pet3.webp" alt="Claude 小管家" />
         </div>
         <div class="pet-shadow" aria-hidden="true"></div>
       </div>
@@ -152,29 +118,54 @@
     /* Claude 桌宠 */
     (function () {
       var pet = document.getElementById('pet');
+      var img = document.getElementById('petImg');
       var bubble = document.getElementById('petBubble');
-      var lines = [
-        '今天也要好好供奉我哦～',
-        '点我干嘛呀，有点痒～',
-        '听说你又要充米米了？',
-        '股股看看就好，不许上头哦。',
-        '摸摸头，我一直在的～',
-        '主人今天写代码顺利吗？'
+      var pets = [
+        { src: 'assets/pet/pet1.webp', lines: ['哼，才不是等你呢。', '再不来我就自己玩了…', '戳那么重干嘛啦！', '今天也是我等你哦。', '别笑，我认真的。'] },
+        { src: 'assets/pet/pet2.webp', lines: ['谢谢主人～最喜欢你了。', '今天也要开开心心的哦。', '帮你许了个小愿望。', '我很好哄的，真的。', '嘿嘿，被戳到心里啦。'] },
+        { src: 'assets/pet/pet3.webp', lines: ['有事就戳我一下。', '我是这里的小管家。', '要不要看看套餐呀？', '书拿反了…才没有。', '今天也好好陪着你。'] },
+        { src: 'assets/pet/pet4.webp', lines: ['偷偷吃一口，不给你。', '面包比作业香。', '饿了吧？我也饿。', '吃完这口就干活！', '不许笑我吃相。'] },
+        { src: 'assets/pet/pet5.webp', lines: ['哼哼～今天心情超好。', '唱歌给你听要不要？', '啦啦啦～', '转个圈给你看。', '开心的时候要分享呀。'] },
+        { src: 'assets/pet/pet6.webp', lines: ['在想人生的意义…还是算了。', '无聊的时候就这么坐着。', '你忙你的，我陪你。', '偷看一下你在干嘛。', '发呆也是工作的一部分。'] },
+        { src: 'assets/pet/pet7.webp', lines: ['哇！这个好好玩！', '你刚才说什么？再说一遍！', '真的吗真的吗？', '眼睛在发光呢～', '好厉害，再来一次！'] },
+        { src: 'assets/pet/pet8.webp', lines: ['这个字念什么来着…', '看不懂，但装懂。', '你懂的话教教我嘛。', '书里怎么没有写你？', '疑惑中，请稍后再问。'] },
+        { src: 'assets/pet/pet9.webp', lines: ['送你一朵花，别嫌弃。', '花香很淡，我很喜欢。', '许愿要闭上眼哦。', '今天也要香香的。', '花开得很好，像你一样。'] }
       ];
-      var i = 0;
-      function poke() {
-        i = (i + 1) % lines.length;
-        bubble.textContent = lines[i];
+      var DEFAULT = 2;
+      var cur = DEFAULT;
+      var backTimer, hideTimer;
+      function say(idx) {
+        bubble.textContent = pets[idx].lines[Math.floor(Math.random() * pets[idx].lines.length)];
         bubble.classList.add('show');
-        pet.classList.remove('wiggle'); void pet.offsetWidth; pet.classList.add('wiggle');
-        clearTimeout(poke.t);
-        poke.t = setTimeout(function () { bubble.classList.remove('show'); }, 3200);
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(function () { bubble.classList.remove('show'); }, 4200);
       }
-      bubble.classList.add('show');
+      function render(idx) {
+        img.classList.remove('fade'); void img.offsetWidth;
+        img.src = pets[idx].src;
+        img.classList.add('fade');
+        cur = idx;
+      }
+      function poke() {
+        var n = cur;
+        while (pets.length > 1 && n === cur) { n = Math.floor(Math.random() * pets.length); }
+        render(n);
+        say(n);
+        pet.classList.remove('wiggle'); void pet.offsetWidth; pet.classList.add('wiggle');
+        clearTimeout(backTimer);
+        backTimer = setTimeout(function () {
+          render(DEFAULT);
+          bubble.textContent = '有事就戳我一下～';
+          bubble.classList.add('show');
+          clearTimeout(hideTimer);
+          hideTimer = setTimeout(function () { bubble.classList.remove('show'); }, 4200);
+        }, 5000);
+      }
       pet.addEventListener('click', poke);
       pet.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); poke(); }
       });
+      say(DEFAULT);
     })();
   </script>
 </body>
