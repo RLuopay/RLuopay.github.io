@@ -277,3 +277,8 @@ footer {
   .pet { width: 104px; height: 114px; }
   .pet-shadow { width: 72px; }
 }
+
+/* pet final size */
+.hero-pet { width: 132px; }
+.pet { width: 116px; height: 126px; }
+.pet-shadow { width: 76px; }
