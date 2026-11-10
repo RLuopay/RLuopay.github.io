@@ -3,16 +3,19 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>OnlinePay AI</title>
-<meta name="description" content="OnlinePay AI — 智能支付基础设施" />
+<title>Claude 小站 · 充值 / 日志 / 行情</title>
+<meta name="description" content="给 QQ 用的 Claude 小站：套餐充值、使用日志查询、常用行情一目了然。" />
 <style>
   :root {
     --bg: #070b16;
+    --panel: rgba(255, 255, 255, 0.045);
     --fg: #e8eefc;
     --muted: #93a1bd;
     --line: rgba(148, 170, 210, 0.16);
     --accent: #4f8bff;
     --accent2: #8d5cff;
+    --green: #3ddc97;
+    --red: #ff6b6b;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
@@ -27,147 +30,120 @@
     overflow-x: hidden;
   }
   .glow {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
+    position: fixed; inset: 0; pointer-events: none;
     background:
-      radial-gradient(60rem 32rem at 15% -10%, rgba(79, 139, 255, 0.22), transparent 60%),
-      radial-gradient(48rem 30rem at 95% 8%, rgba(141, 92, 255, 0.18), transparent 62%),
+      radial-gradient(60rem 32rem at 12% -10%, rgba(79, 139, 255, 0.22), transparent 60%),
+      radial-gradient(48rem 30rem at 95% 5%, rgba(141, 92, 255, 0.18), transparent 62%),
       radial-gradient(40rem 26rem at 50% 110%, rgba(46, 204, 190, 0.10), transparent 60%);
   }
   header {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.4rem clamp(1.2rem, 4vw, 3.4rem);
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.3rem clamp(1.2rem, 4vw, 3.4rem);
   }
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-weight: 650;
-    letter-spacing: 0.02em;
-  }
+  .brand { display: flex; align-items: center; gap: 0.6rem; font-weight: 650; letter-spacing: 0.02em; }
   .mark {
-    width: 34px; height: 34px;
-    border-radius: 10px;
+    width: 34px; height: 34px; border-radius: 10px;
     background: linear-gradient(140deg, var(--accent), var(--accent2));
     box-shadow: 0 8px 24px rgba(79, 139, 255, 0.35);
-    display: grid; place-items: center;
-    font-size: 17px;
+    display: grid; place-items: center; font-size: 17px;
   }
-  nav a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.92rem;
-    margin-left: 1.4rem;
-    transition: color 0.2s;
-  }
+  nav { display: flex; gap: 1.5rem; font-size: 0.92rem; }
+  nav a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
   nav a:hover { color: var(--fg); }
   main {
-    position: relative;
-    z-index: 1;
-    flex: 1;
-    width: min(1080px, 92vw);
-    margin: 0 auto;
-    padding: clamp(2.5rem, 8vh, 6rem) 0 4rem;
+    position: relative; z-index: 1; flex: 1;
+    width: min(1080px, 92vw); margin: 0 auto;
+    padding: clamp(2rem, 6vh, 4rem) 0 4.5rem;
   }
+  .hero { margin-bottom: 4rem; }
   .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.78rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--muted);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 0.42rem 0.9rem;
-    background: rgba(255, 255, 255, 0.02);
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted); border: 1px solid var(--line); border-radius: 999px;
+    padding: 0.4rem 0.9rem; background: rgba(255, 255, 255, 0.02);
   }
   h1 {
-    font-size: clamp(2.2rem, 6vw, 4.2rem);
-    line-height: 1.08;
-    letter-spacing: -0.03em;
-    margin: 1.4rem 0 1rem;
-    max-width: 18ch;
+    font-size: clamp(2rem, 5.2vw, 3.6rem); line-height: 1.1;
+    letter-spacing: -0.03em; margin: 1.2rem 0 0.9rem; max-width: 20ch;
   }
   h1 .grad {
     background: linear-gradient(100deg, #7fb0ff, #b79dff 55%, #6fe6d8);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
   }
-  .lead {
-    color: var(--muted);
-    font-size: clamp(1rem, 2.2vw, 1.15rem);
-    line-height: 1.75;
-    max-width: 46ch;
-    margin: 0 0 2.2rem;
-  }
-  .actions { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-bottom: 4rem; }
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.82rem 1.5rem;
-    border-radius: 12px;
-    font-size: 0.95rem;
-    font-weight: 560;
-    text-decoration: none;
-    transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
-  }
-  .btn-primary {
-    color: #fff;
-    background: linear-gradient(120deg, var(--accent), var(--accent2));
-    box-shadow: 0 10px 30px rgba(79, 139, 255, 0.3);
-  }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 38px rgba(79, 139, 255, 0.42); }
-  .btn-ghost {
-    color: var(--fg);
-    border: 1px solid var(--line);
-    background: rgba(255, 255, 255, 0.03);
-  }
-  .btn-ghost:hover { background: rgba(255, 255, 255, 0.07); }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 1.1rem;
-  }
+  .lead { color: var(--muted); font-size: clamp(0.98rem, 2vw, 1.1rem); line-height: 1.75; max-width: 50ch; margin: 0; }
+  section { scroll-margin-top: 1.5rem; margin-bottom: 4rem; }
+  .sec-head { display: flex; align-items: baseline; gap: 0.8rem; margin-bottom: 1.3rem; }
+  .sec-head h2 { margin: 0; font-size: 1.25rem; letter-spacing: 0.01em; }
+  .sec-head span { color: var(--muted); font-size: 0.85rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
   .card {
-    padding: 1.5rem;
-    border-radius: 16px;
-    border: 1px solid var(--line);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+    padding: 1.4rem; border-radius: 16px; border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
     backdrop-filter: blur(8px);
   }
-  .card h3 { margin: 0.9rem 0 0.5rem; font-size: 1.02rem; letter-spacing: 0.01em; }
-  .card p { margin: 0; color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
-  .ico {
-    width: 40px; height: 40px;
-    border-radius: 11px;
-    display: grid; place-items: center;
-    font-size: 19px;
-    background: rgba(79, 139, 255, 0.14);
-    border: 1px solid rgba(79, 139, 255, 0.28);
+  .plan .name { color: var(--muted); font-size: 0.85rem; letter-spacing: 0.06em; }
+  .plan .price { font-size: 2rem; font-weight: 700; margin: 0.4rem 0 0.2rem; letter-spacing: -0.02em; }
+  .plan .price small { font-size: 0.9rem; font-weight: 500; color: var(--muted); }
+  .plan ul { margin: 0.9rem 0 1.2rem; padding: 0; list-style: none; }
+  .plan li { color: var(--muted); font-size: 0.9rem; line-height: 1.7; padding-left: 1rem; position: relative; }
+  .plan li::before { content: "·"; position: absolute; left: 0.15rem; color: var(--accent); font-weight: 700; }
+  .badge {
+    display: inline-block; font-size: 0.72rem; padding: 0.2rem 0.55rem; border-radius: 999px;
+    background: rgba(79, 139, 255, 0.15); border: 1px solid rgba(79, 139, 255, 0.3); color: #a8c4ff;
   }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+    width: 100%; padding: 0.7rem 1rem; border-radius: 10px; font-size: 0.9rem;
+    font-weight: 560; text-decoration: none; cursor: pointer; border: none;
+    transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+  }
+  .btn-primary { color: #fff; background: linear-gradient(120deg, var(--accent), var(--accent2)); box-shadow: 0 8px 24px rgba(79,139,255,0.28); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 12px 30px rgba(79,139,255,0.4); }
+  .btn-ghost { color: var(--fg); border: 1px solid var(--line); background: rgba(255,255,255,0.03); }
+  .btn-ghost:hover { background: rgba(255,255,255,0.08); }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+  .step .n {
+    width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center;
+    font-size: 0.85rem; font-weight: 700; color: #cfe0ff;
+    background: rgba(79,139,255,0.16); border: 1px solid rgba(79,139,255,0.3);
+  }
+  .step h3 { margin: 0.7rem 0 0.35rem; font-size: 0.95rem; }
+  .step p { margin: 0; color: var(--muted); font-size: 0.86rem; line-height: 1.65; }
+  .logbox { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .field label { display: block; font-size: 0.82rem; color: var(--muted); margin-bottom: 0.4rem; }
+  .field input {
+    width: 100%; padding: 0.68rem 0.8rem; border-radius: 10px; font-size: 0.92rem;
+    color: var(--fg); background: rgba(255,255,255,0.04); border: 1px solid var(--line);
+    outline: none; transition: border-color 0.2s;
+  }
+  .field input:focus { border-color: rgba(79,139,255,0.55); }
+  .log-actions { display: flex; gap: 0.7rem; margin-top: 0.9rem; }
+  .log-actions .btn { width: auto; padding: 0.68rem 1.4rem; }
+  #logResult {
+    margin-top: 1rem; border-radius: 12px; border: 1px dashed var(--line);
+    padding: 1rem; font-size: 0.88rem; color: var(--muted); line-height: 1.7;
+    white-space: pre-wrap; word-break: break-all; min-height: 3rem;
+  }
+  .tickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+  .ticker .sym { font-size: 0.82rem; color: var(--muted); letter-spacing: 0.08em; }
+  .ticker .q { font-size: 1.6rem; font-weight: 700; margin: 0.35rem 0 0.15rem; letter-spacing: -0.02em; }
+  .ticker .chg { font-size: 0.86rem; font-weight: 560; }
+  .up { color: var(--green); } .down { color: var(--red); }
+  .note { margin-top: 0.9rem; color: var(--muted); font-size: 0.8rem; }
+  .note a { color: #9dc0ff; text-decoration: none; }
+  .note a:hover { text-decoration: underline; }
   footer {
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
     border-top: 1px solid var(--line);
-    padding: 1.4rem clamp(1.2rem, 4vw, 3.4rem);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    color: var(--muted);
-    font-size: 0.84rem;
+    padding: 1.3rem clamp(1.2rem, 4vw, 3.4rem);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem;
+    color: var(--muted); font-size: 0.83rem;
   }
+  footer a { color: #9dc0ff; text-decoration: none; }
   @media (max-width: 640px) {
-    nav { display: none; }
-    footer { flex-direction: column; }
+    nav { gap: 1rem; font-size: 0.84rem; }
+    .logbox { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -175,51 +151,131 @@
   <div class="glow" aria-hidden="true"></div>
 
   <header>
-    <div class="brand"><span class="mark">◈</span> OnlinePay AI</div>
+    <div class="brand"><span class="mark">◈</span> Claude 小站</div>
     <nav>
-      <a href="#features">能力</a>
-      <a href="#contact">联系</a>
+      <a href="#recharge">充值</a>
+      <a href="#logs">日志</a>
+      <a href="#stocks">行情</a>
     </nav>
   </header>
 
   <main>
-    <span class="eyebrow">Infrastructure · AI Native</span>
-    <h1>让支付像<br /><span class="grad">对话一样自然</span></h1>
-    <p class="lead">
-      面向 AI 应用的支付基础设施：一次接入，完成订阅、按量计费与全球收单，
-      把复杂的账务和合规交给底层。
-    </p>
-    <div class="actions">
-      <a class="btn btn-primary" href="#contact">开始接入</a>
-      <a class="btn btn-ghost" href="#features">了解能力</a>
+    <div class="hero">
+      <span class="eyebrow">For QQ · Claude</span>
+      <h1>给 QQ 的 Claude<br /><span class="grad">充值、日志、行情</span></h1>
+      <p class="lead">
+        一个页面搞定三件事：给 QQ 号开 Claude 套餐、查自己的使用记录、顺手看一眼常用行情。
+      </p>
     </div>
 
-    <section id="features" class="grid">
-      <div class="card">
-        <div class="ico">⚡</div>
-        <h3>分钟级接入</h3>
-        <p>一套 API 覆盖订阅、用量计费与退款，SDK 多语言，当天即可上线。</p>
+    <section id="recharge">
+      <div class="sec-head"><h2>Claude 套餐</h2><span>按月续费，随时可停</span></div>
+      <div class="grid">
+        <div class="card plan">
+          <div class="name">体验版</div>
+          <div class="price">¥ 19<small> / 月</small></div>
+          <ul>
+            <li>每日 50 次对话</li>
+            <li>标准模型速度</li>
+            <li>适合偶尔用用</li>
+          </ul>
+          <a class="btn btn-ghost" href="#contact">QQ 联系开通</a>
+        </div>
+        <div class="card plan">
+          <div class="name">标准版 <span class="badge">推荐</span></div>
+          <div class="price">¥ 49<small> / 月</small></div>
+          <ul>
+            <li>每日 300 次对话</li>
+            <li>优先响应通道</li>
+            <li>支持图片理解</li>
+          </ul>
+          <a class="btn btn-primary" href="#contact">QQ 联系开通</a>
+        </div>
+        <div class="card plan">
+          <div class="name">无限版</div>
+          <div class="price">¥ 99<small> / 月</small></div>
+          <ul>
+            <li>不限对话次数</li>
+            <li>长上下文模式</li>
+            <li>专属通道优先</li>
+          </ul>
+          <a class="btn btn-ghost" href="#contact">QQ 联系开通</a>
+        </div>
       </div>
-      <div class="card">
-        <div class="ico">🌍</div>
-        <h3>全球收单</h3>
-        <p>多币种、多支付方式，自动路由最优通道，提升跨境支付成功率。</p>
+      <div class="steps">
+        <div class="step"><div class="n">1</div><h3>加 QQ 报号</h3><p>把要开通的 QQ 号和套餐发给小站客服。</p></div>
+        <div class="step"><div class="n">2</div><h3>付款开通</h3><p>按报价付款，一般几分钟内开通成功。</p></div>
+        <div class="step"><div class="n">3</div><h3>回 QQ 直接用</h3><p>重新发消息即可，无需装任何插件。</p></div>
       </div>
+    </section>
+
+    <section id="logs">
+      <div class="sec-head"><h2>使用日志</h2><span>按 QQ 号查询</span></div>
       <div class="card">
-        <div class="ico">🛡️</div>
-        <h3>合规省心</h3>
-        <p>内置风控与对账能力，交易数据可追溯，减少人工核对成本。</p>
+        <div class="logbox">
+          <div class="field"><label for="qq">QQ 号</label><input id="qq" placeholder="例如 123456789" autocomplete="off" /></div>
+          <div class="field"><label for="order">订单号（可选）</label><input id="order" placeholder="例如 OP-20261110-001" autocomplete="off" /></div>
+        </div>
+        <div class="log-actions">
+          <button class="btn btn-primary" id="logBtn">查询日志</button>
+        </div>
+        <div id="logResult">填好 QQ 号后点查询，会显示最近 5 次开通和用量记录。</div>
+        <div class="note">演示模式：数据为本地模拟，接入后台后返回真实记录。</div>
+      </div>
+    </section>
+
+    <section id="stocks">
+      <div class="sec-head"><h2>常用行情</h2><span>示例数据 · 非实时</span></div>
+      <div class="tickers">
+        <div class="card ticker"><div class="sym">NVDA · 英伟达</div><div class="q">$ 188.42</div><div class="chg up">▲ +2.14%</div></div>
+        <div class="card ticker"><div class="sym">AAPL · 苹果</div><div class="q">$ 236.80</div><div class="chg down">▼ -0.62%</div></div>
+        <div class="card ticker"><div class="sym">TSLA · 特斯拉</div><div class="q">$ 421.35</div><div class="chg up">▲ +1.03%</div></div>
+        <div class="card ticker"><div class="sym">000001 · 上证指数</div><div class="q">3 421.06</div><div class="chg up">▲ +0.48%</div></div>
+      </div>
+      <div class="note">想看实时行情？<a href="https://quote.eastmoney.com/" target="_blank" rel="noopener">去东方财富 →</a></div>
+    </section>
+
+    <section id="contact">
+      <div class="sec-head"><h2>联系</h2><span>客服在线时间 9:00 – 23:00</span></div>
+      <div class="card" style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;">
+        <div>
+          <div style="font-weight:600;margin-bottom:0.3rem;">QQ：待填写</div>
+          <div style="color:var(--muted);font-size:0.88rem;">加好友备注「Claude」，开通和续费都在这里。</div>
+        </div>
+        <a class="btn btn-primary" style="width:auto;padding:0.7rem 1.6rem;" href="https://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes" target="_blank" rel="noopener">打开 QQ 聊天</a>
       </div>
     </section>
   </main>
 
-  <footer id="contact">
-    <span>© <span id="year">2026</span> OnlinePay AI</span>
-    <span>hello@onlinepay-ai-ch.js.org</span>
+  <footer>
+    <span>© <span id="year">2026</span> Claude 小站</span>
+    <span>本站仅作服务说明，行情为示例数据。</span>
   </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.getElementById('logBtn').addEventListener('click', function () {
+      var qq = document.getElementById('qq').value.trim();
+      var box = document.getElementById('logResult');
+      if (!qq) { box.textContent = '先填一个 QQ 号呀～'; return; }
+      if (!/^\d{5,12}$/.test(qq)) { box.textContent = 'QQ 号看起来不太对，检查一下？'; return; }
+      box.textContent = '查询中…';
+      setTimeout(function () {
+        var d = new Date();
+        var pad = function (n) { return String(n).padStart(2, '0'); };
+        var t = function (off) {
+          var x = new Date(d.getTime() - off * 3600 * 1000);
+          return x.getFullYear() + '-' + pad(x.getMonth() + 1) + '-' + pad(x.getDate()) + ' ' + pad(x.getHours()) + ':' + pad(x.getMinutes());
+        };
+        box.textContent =
+          'QQ ' + qq + ' 的最近记录：\n' +
+          t(2) + '  标准版 · 开通成功（30 天）\n' +
+          t(5) + '  今日对话 86 次\n' +
+          t(26) + '  体验版 · 已到期\n' +
+          t(30) + '  体验版 · 开通成功（30 天）';
+      }, 600);
+    });
   </script>
 </body>
 </html>
