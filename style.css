@@ -282,3 +282,8 @@ footer {
 .hero-pet { width: 132px; }
 .pet { width: 116px; height: 126px; }
 .pet-shadow { width: 76px; }
+
+/* pet size per user reference */
+.hero-pet { width: 184px; }
+.pet { width: 160px; height: 170px; }
+.pet-shadow { width: 104px; }
