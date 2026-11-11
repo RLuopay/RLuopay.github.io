@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Claude 小站 · 首页</title>
 <meta name="description" content="给 Mika 的 Claude 小站：充米米、查日志、查股股。" />
-<link rel="stylesheet" href="style.css?v=30" />
+<link rel="stylesheet" href="style.css?v=31" />
 </head>
 <body>
   <div class="glow" aria-hidden="true"></div>
@@ -80,7 +80,6 @@
           <input type="hidden" name="_subject" value="Claude 小站 · 新反馈" />
           <input type="hidden" name="_template" value="table" />
           <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_next" value="https://rluopay.github.io/index.html?sent=1" />
           <div class="fb-row">
             <label>称呼（可选）<input name="称呼" placeholder="怎么称呼你" /></label>
             <label>类型
@@ -99,6 +98,7 @@
           </div>
         </form>
         <div class="fb-sent" id="fbSent" hidden>收到啦～谢谢你！</div>
+        <button class="btn btn-ghost fb-copy" id="fbCopy" type="button" style="display:none">复制内容</button>
       </div>
     </section>
 
@@ -202,13 +202,64 @@
   </div>
   <script>
     (function () {
-      if (!/[?&]sent=1/.test(location.search)) return;
-      var el = document.getElementById('fbSent');
       var form = document.getElementById('feedbackForm');
-      if (el) el.hidden = false;
+      var sent = document.getElementById('fbSent');
+      var msg = document.createElement('p');
+      msg.className = 'fb-msg';
+      if (form) form.appendChild(msg);
+
+      function mailFields() {
+        var fd = new FormData(form);
+        var name = (fd.get('称呼') || '匿名').toString().trim() || '匿名';
+        var type = (fd.get('类型') || '建议').toString();
+        var content = (fd.get('内容') || '').toString();
+        var mail = (fd.get('邮箱') || '').toString().trim();
+        return { name: name, type: type, content: content, mail: mail };
+      }
+      function buildMailto() {
+        var f = mailFields();
+        var subject = 'Claude 小站 · ' + f.type;
+        var body = '称呼：' + f.name + '\n类型：' + f.type + '\n\n' + f.content + (f.mail ? '\n\n联系方式：' + f.mail : '');
+        return 'mailto:redmoon9388@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      }
+
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var content = (new FormData(form).get('内容') || '').toString().trim();
+          if (!content) { msg.textContent = '内容还没写呢～'; return; }
+          var url = buildMailto();
+          msg.textContent = '正在打开邮件…没弹出的话，点「复制内容」发到 redmoon9388@gmail.com 也行。';
+          var copyBtn = document.getElementById('fbCopy');
+          if (copyBtn) copyBtn.style.display = 'inline-flex';
+          window.location.href = url;
+          setTimeout(function () {
+            if (form && !form.hidden) {
+              msg.textContent = '没弹出邮件？内容已备好，点下面的「复制」发给 redmoon9388@gmail.com 也行。';
+            }
+          }, 1200);
+        });
+      }
+
+      var copyBtn = document.getElementById('fbCopy');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', function () {
+          var f = mailFields();
+          var text = '称呼：' + f.name + '\n类型：' + f.type + '\n\n' + f.content + (f.mail ? '\n\n联系方式：' + f.mail : '');
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function () {
+              copyBtn.textContent = '已复制';
+              setTimeout(function () { copyBtn.textContent = '复制内容'; }, 1600);
+            });
+          } else {
+            window.prompt('复制下面内容发到 redmoon9388@gmail.com', text);
+          }
+        });
+      }
+
+      if (!/[?&]sent=1/.test(location.search)) return;
+      if (sent) sent.hidden = false;
       if (form) form.style.display = 'none';
-      var fb = document.getElementById('feedback');
-      if (fb) setTimeout(function () { fb.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 120);
     })();
   </script>
   <script src="site.js?v=3"></script>
