@@ -12,7 +12,7 @@
   } catch (e) {}
 
   var HANT = {
-    '充值': '儲值', '日志': '日誌', '行情': '行情', '模拟': '模擬', '收盘': '收盤',
+    '充值': '儲值', '爱发电': '愛發電', '日志': '日誌', '行情': '行情', '模拟': '模擬', '收盘': '收盤',
     '登录': '登入', '表情': '表情', '返回首页': '回首頁', '← 返回首页': '← 回首頁',
     '给 Mika 的 Claude 花米！': '給 Mika 的 Claude 花米！',
     '查股股、充米米、查日志': '查股股、充米米、查日誌',
@@ -28,7 +28,7 @@
     '今天也在好好供奉 Claude 大小姐。': '今天也在好好供奉 Claude 大小姐。',
     '查股股可以，别拿它当投资建议哦。': '查股股可以，別拿它當投資建議哦。',
     '有事就戳我一下～': '有事就戳我一下～',
-    '供奉 Claude 大小姐': '供奉 Claude 大小姐',
+    '供奉 Claude 大小姐': '供奉 Claude 大小姐', '爱发电支持': '愛發電支持',
     '按月挑一档就好': '按月挑一檔就好',
     '三档按日用次数分，随时可以停，不绑长周期。': '三檔按日用次數分，隨時可以停，不綁長週期。',
     '按品质分类': '按品質分類',
@@ -84,7 +84,7 @@
   };
 
   var EN = {
-    '充值': 'Top up', '日志': 'Logs', '行情': 'Markets', '模拟': 'Sim', '收盘': 'Close',
+    '充值': 'Top up', '爱发电': 'Afdian', '日志': 'Logs', '行情': 'Markets', '模拟': 'Sim', '收盘': 'Close',
     '登录': 'Sign in', '表情': 'Emoji', '返回首页': 'Home', '← 返回首页': '← Home',
     '给 Mika 的 Claude 花米！': 'Claude for Mika!',
     '查股股、充米米、查日志': 'Stocks, top-ups, logs',
@@ -100,7 +100,7 @@
     '今天也在好好供奉 Claude 大小姐。': 'Another day serving Claude.',
     '查股股可以，别拿它当投资建议哦。': 'Not investment advice.',
     '有事就戳我一下～': 'Tap me~',
-    '供奉 Claude 大小姐': 'Serving Claude', '按月挑一档就好': 'Pick a plan',
+    '供奉 Claude 大小姐': 'Serving Claude', '爱发电支持': 'Support on Afdian', '按月挑一档就好': 'Pick a plan',
     '三档按日用次数分，随时可以停，不绑长周期。': 'Three tiers by daily usage, cancel anytime.',
     '按品质分类': 'By tier',
     '体验版': 'Trial', '标准版': 'Standard', '无限版': 'Unlimited', '推荐': 'Recommended',
