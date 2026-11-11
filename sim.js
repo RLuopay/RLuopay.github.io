@@ -41,9 +41,36 @@
 
   function quoteKey(sym) { return 'quote:' + sym; }
 
+  var FX_MAP = { 'CNY=X': 'USD', 'EURCNY=X': 'EUR', 'JPYCNY=X': 'JPY', 'HKDCNY=X': 'HKD' };
+  var fxRates = null, fxAt = 0;
+
+  function loadFxRates() {
+    if (fxRates && Date.now() - fxAt < 6 * 3600 * 1000) return Promise.resolve(fxRates);
+    return fetch('https://open.er-api.com/v6/latest/USD', { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { fxRates = d.rates || {}; fxAt = Date.now(); return fxRates; });
+  }
+
+  function fxValue(sym) {
+    return loadFxRates().then(function (r) {
+      if (sym === 'CNY=X') return r.CNY;
+      if (sym === 'EURCNY=X') return r.CNY / r.EUR;
+      if (sym === 'JPYCNY=X') return r.CNY / r.JPY;
+      if (sym === 'HKDCNY=X') return r.CNY / r.HKD;
+      return null;
+    });
+  }
+
   function loadPrice(sym) {
     var age = prices[sym] && Date.now() - prices[sym].ts < 30 * 1000;
     if (age) return Promise.resolve(prices[sym]);
+    if (FX_MAP[sym]) {
+      return fxValue(sym).then(function (v) {
+        var obj = { price: v, currency: 'CNY', ts: Date.now() };
+        prices[sym] = obj;
+        return obj;
+      });
+    }
     return fetchYahoo('/v8/finance/chart/' + encodeURIComponent(sym) + '?range=1d&interval=5m')
       .then(function (d) {
         var m = d.chart.result[0].meta;
