@@ -43,6 +43,17 @@
     return retry(2);
   }
 
+
+  var SNAP = null;
+  function snapKey(sym) { return sym.replace('^', '').replace(/[=.]/g, '_'); }
+  function loadSnapshot() {
+    if (SNAP) return Promise.resolve(SNAP);
+    return fetch('assets/data/snapshot.json', { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { SNAP = d; return d; })
+      .catch(function () { return null; });
+  }
+
   var chartEl = document.getElementById('chart');
   var statusEl = document.getElementById('chartStatus');
   var hasLib = typeof window.LightweightCharts !== 'undefined';
@@ -118,7 +129,32 @@
       statusEl.textContent = '更新于 ' + new Date().toLocaleTimeString('zh-CN', { hour12: false }) + ' · Yahoo Finance';
       loadNews(state.symbol);
     }).catch(function () {
-      statusEl.textContent = '加载失败了，等半分钟再试（公共代理可能限流）。';
+      loadSnapshot().then(function (snap) {
+        var item = snap && snap[snapKey(sym)];
+        if (!item || !item.rows || !item.rows.length) {
+          statusEl.textContent = '加载失败了，等半分钟再试（公共代理可能限流）。';
+          return;
+        }
+        var candles = item.rows.map(function (r) {
+          return { time: r[0], open: r[1], high: r[2], low: r[3], close: r[4] };
+        });
+        series.setData(candles);
+        chart.timeScale().fitContent();
+        state.symbol = item.sym;
+        state.name = item.name || state.name;
+        state.currency = item.currency || state.currency;
+        state.price = item.price;
+        document.getElementById('chartSym').textContent = state.symbol;
+        document.getElementById('chartName').textContent = state.name || '';
+        document.getElementById('chartPrice').textContent = fmtPrice(item.price, state.currency);
+        var pct = item.prev && item.price ? (item.price - item.prev) / item.prev * 100 : null;
+        var chgEl = document.getElementById('chartChg');
+        if (pct != null) {
+          chgEl.textContent = (pct >= 0 ? '▲ +' : '▼ ') + pct.toFixed(2) + '%';
+          chgEl.className = pct >= 0 ? 'chg up' : 'chg down';
+        }
+        statusEl.textContent = '实时接口被限流，这是离线快照（可能不是最新）。';
+      });
     });
   }
 
