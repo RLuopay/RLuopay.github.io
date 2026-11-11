@@ -897,3 +897,17 @@ footer {
 .plugin-btn { width: auto; align-self: flex-start; padding: 0.4rem 1rem; font-size: 0.82rem; }
 .plugin { display: flex; flex-direction: column; }
 .plugin p { flex: 1; }
+
+/* horizontal swipe rows */
+.plugin-grid {
+  display: flex; gap: 1rem; overflow-x: auto; overflow-y: hidden;
+  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.5rem;
+}
+.plugin-grid::-webkit-scrollbar { height: 6px; }
+.plugin-grid::-webkit-scrollbar-thumb { background: #D9D4D0; border-radius: 3px; }
+.plugin-grid::-webkit-scrollbar-track { background: transparent; }
+.plugin { flex: 0 0 262px; scroll-snap-align: start; }
+@media (max-width: 640px) {
+  .plugin { flex-basis: 220px; }
+}
