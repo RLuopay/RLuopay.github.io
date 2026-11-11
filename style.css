@@ -776,3 +776,26 @@ footer {
 .drink h3 { margin: 0.2rem 0 0.4rem; font-size: 0.98rem; line-height: 1.5; }
 .drink p { margin: 0 0 0.9rem; color: var(--muted); font-size: 0.84rem; line-height: 1.6; flex: 1; }
 .drink .btn { width: auto; align-self: flex-start; padding: 0.42rem 1rem; font-size: 0.84rem; }
+
+/* ---- feedback ---- */
+.feedback-card { padding: 1.3rem; }
+.fb-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+.feedback-card label { display: block; font-size: 0.82rem; color: var(--muted); margin-bottom: 0.8rem; }
+.feedback-card input, .feedback-card select, .feedback-card textarea {
+  width: 100%; margin-top: 0.35rem; padding: 0.6rem 0.75rem;
+  border-radius: 9px; border: 1px solid var(--line); background: var(--field);
+  color: var(--fg); font-family: inherit; font-size: 0.9rem;
+}
+.feedback-card textarea { min-height: 96px; resize: vertical; }
+.feedback-card input:focus, .feedback-card select:focus, .feedback-card textarea:focus {
+  outline: none; background: #FFFFFF; border-color: var(--accent-soft);
+  box-shadow: 0 0 0 3px rgba(135, 133, 134, 0.16);
+}
+.fb-actions { display: flex; align-items: center; gap: 0.9rem; flex-wrap: wrap; }
+.fb-actions .btn { width: auto; padding: 0.55rem 1.4rem; }
+.fb-hint { font-size: 0.76rem; color: var(--muted); }
+.fb-sent {
+  padding: 1.4rem; text-align: center; color: var(--green);
+  font-size: 1rem; border: 1px dashed var(--line); border-radius: 12px;
+}
+@media (max-width: 640px) { .fb-row { grid-template-columns: 1fr; } }
