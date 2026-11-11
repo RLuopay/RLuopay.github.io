@@ -2,6 +2,11 @@
   'use strict';
 
   var DEFAULT = 2;
+  var PAID_IMG = 'assets/pet/pet7.webp';
+  var PAID_IDX = 6;
+
+  function isPaid() { try { return localStorage.getItem('claudePaid') === '1'; } catch (e) { return false; } }
+  function markPaid() { try { localStorage.setItem('claudePaid', '1'); } catch (e) {} }
 
   var PETS = [
     {
@@ -96,7 +101,8 @@
   function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
 
   /* ---------- shared behavior ---------- */
-  function avatar(root, imgEl, bubble, wrapClass) {
+  function avatar(root, imgEl, bubble, opts) {
+    opts = opts || {};
     var cur = DEFAULT;
     var backTimer = null;
     var hideTimer = null;
@@ -120,6 +126,15 @@
 
     function poke() {
       var n = cur;
+      if (opts.paidFixed) {
+        var fixedTexts = PETS[PAID_IDX].text[curLang()] || PETS[PAID_IDX].text['zh-Hans'];
+        say(pick(fixedTexts));
+        root.classList.remove('wiggle');
+        void root.offsetWidth;
+        root.classList.add('wiggle');
+        setTimeout(function () { root.classList.remove('wiggle'); }, 560);
+        return;
+      }
       while (PETS.length > 1 && n === cur) n = Math.floor(Math.random() * PETS.length);
       render(n, true);
       say(pick(PETS[n].text[curLang()] || PETS[n].text['zh-Hans']));
@@ -147,7 +162,8 @@
   var heroBubble = document.getElementById('petBubble');
 
   if (hero && heroImg) {
-    var pet = avatar(hero, heroImg, heroBubble);
+    var pet = avatar(hero, heroImg, heroBubble, {});
+    heroImg.src = (function(){ try { return localStorage.getItem('claudePaid')==='1' ? PAID_IMG : heroImg.getAttribute('src'); } catch(e){ return heroImg.getAttribute('src'); } })();
     hero.addEventListener('click', function () { pet.poke(); });
     hero.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pet.poke(); }
@@ -207,7 +223,8 @@
 
   document.body.appendChild(el);
 
-  var petApi = avatar(el, img, bub);
+  var petApi = avatar(el, img, bub, { paidFixed: big && isPaid() });
+  if (isPaid()) img.src = PAID_IMG;
 
   if (big) {
     el.addEventListener('click', function () { petApi.poke(); });
@@ -270,6 +287,11 @@
   }, 800);
 
   window.petCelebrate = function () {
+    markPaid();
+    img.src = PAID_IMG;
+    img.classList.remove('fade');
+    void img.offsetWidth;
+    img.classList.add('fade');
     var t = HAPPY[curLang()] || HAPPY['zh-Hans'];
     petApi.say(pick(t));
   };
