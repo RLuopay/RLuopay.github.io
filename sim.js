@@ -41,6 +41,17 @@
 
   function quoteKey(sym) { return 'quote:' + sym; }
 
+
+  var SNAP = null;
+  function snapKey(sym) { return sym.replace('^', '').replace(/[=.]/g, '_'); }
+  function loadSnapshot() {
+    if (SNAP) return Promise.resolve(SNAP);
+    return fetch('assets/data/snapshot.json', { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { SNAP = d; return d; })
+      .catch(function () { return null; });
+  }
+
   var FX_MAP = { 'CNY=X': 'USD', 'EURCNY=X': 'EUR', 'JPYCNY=X': 'JPY', 'HKDCNY=X': 'HKD' };
   var fxRates = null, fxAt = 0;
 
@@ -74,9 +85,18 @@
     return fetchYahoo('/v8/finance/chart/' + encodeURIComponent(sym) + '?range=1d&interval=5m')
       .then(function (d) {
         var m = d.chart.result[0].meta;
-        var obj = { price: m.regularMarketPrice, currency: m.currency, ts: Date.now() };
+        var obj = { price: m.regularMarketPrice, currency: m.currency, ts: Date.now(), stale: false };
         prices[sym] = obj;
         return obj;
+      })
+      .catch(function () {
+        return loadSnapshot().then(function (snap) {
+          var item = snap && snap[snapKey(sym)];
+          if (!item || item.price == null) throw new Error('no price');
+          var obj = { price: item.price, currency: item.currency, ts: Date.now(), stale: true };
+          prices[sym] = obj;
+          return obj;
+        });
       });
   }
 
