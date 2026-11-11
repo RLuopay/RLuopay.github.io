@@ -251,23 +251,20 @@
   }
 
   function buildBalls() {
-    var nav = document.querySelector('header nav');
-    if (!nav || nav.querySelector('.lang-ball')) return;
-    var links = nav.querySelectorAll('a');
-    Array.prototype.forEach.call(links, function (a) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'lang-ball';
-      b.setAttribute('aria-label', 'Language / 语言 / 語言');
-      b.textContent = '🌐';
-      b.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (pop) { closePop(); return; }
-        openPop(b);
-      });
-      a.parentNode.insertBefore(b, a.nextSibling);
+    var ua = document.querySelector('header .user-area');
+    if (!ua || ua.querySelector('.lang-ball')) return;
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'lang-ball';
+    b.setAttribute('aria-label', 'Language / 语言 / 語言');
+    b.textContent = '🌐';
+    b.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (pop) { closePop(); return; }
+      openPop(b);
     });
+    ua.appendChild(b);
   }
 
   function start() {
