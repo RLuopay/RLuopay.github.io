@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Claude 小站 · 首页</title>
 <meta name="description" content="给 Mika 的 Claude 小站：充米米、查日志、查股股。" />
-<link rel="stylesheet" href="style.css?v=28" />
+<link rel="stylesheet" href="style.css?v=30" />
 </head>
 <body>
   <div class="glow" aria-hidden="true"></div>
@@ -69,6 +69,36 @@
             <span class="go">去瞧瞧 →</span>
           </div>
         </a>
+      </div>
+    </section>
+
+
+    <section class="feedback" id="feedback">
+      <div class="sec-head"><h2>留个话</h2><span>建议或 bug 都行</span></div>
+      <div class="card feedback-card">
+        <form action="https://formsubmit.co/redmoon9388@gmail.com" method="POST" id="feedbackForm">
+          <input type="hidden" name="_subject" value="Claude 小站 · 新反馈" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_next" value="https://rluopay.github.io/index.html?sent=1" />
+          <div class="fb-row">
+            <label>称呼（可选）<input name="称呼" placeholder="怎么称呼你" /></label>
+            <label>类型
+              <select name="类型">
+                <option value="建议">建议</option>
+                <option value="Bug 反馈">Bug 反馈</option>
+                <option value="其他">其他</option>
+              </select>
+            </label>
+          </div>
+          <label>内容 <textarea name="内容" required placeholder="想到什么就写，bug 的话说一下在哪个页面～"></textarea></label>
+          <label>你的邮箱（可选，想收到回复就填）<input type="email" name="邮箱" placeholder="you@example.com" /></label>
+          <div class="fb-actions">
+            <button class="btn btn-primary" type="submit">发送</button>
+            <span class="fb-hint">会直接发到小站主人的邮箱</span>
+          </div>
+        </form>
+        <div class="fb-sent" id="fbSent" hidden>收到啦～谢谢你！</div>
       </div>
     </section>
 
@@ -170,6 +200,17 @@
       <p class="user-msg" id="userMsg"></p>
     </div>
   </div>
+  <script>
+    (function () {
+      if (!/[?&]sent=1/.test(location.search)) return;
+      var el = document.getElementById('fbSent');
+      var form = document.getElementById('feedbackForm');
+      if (el) el.hidden = false;
+      if (form) form.style.display = 'none';
+      var fb = document.getElementById('feedback');
+      if (fb) setTimeout(function () { fb.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 120);
+    })();
+  </script>
   <script src="site.js?v=3"></script>
   <script src="pet.js?v=7"></script>
   <script src="i18n.js?v=4"></script>
