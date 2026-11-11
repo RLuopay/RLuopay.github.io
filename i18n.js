@@ -160,6 +160,8 @@
   var orig = new WeakMap();
 
   function applyNode(node) {
+    var pn = node.parentNode;
+    if (pn && pn.closest && pn.closest('[data-i18n-skip]')) return;
     if (!orig.has(node)) orig.set(node, node.nodeValue);
     var base = orig.get(node);
     var key = base.trim();
