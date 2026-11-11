@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>收盘总结 · Claude 小站</title>
+<meta name="description" content="每日闭市总结图与次日开市时间。" />
+<link rel="stylesheet" href="style.css?v=18" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header>
+    <a class="brand" href="index.html"><span class="mark">◈</span> Claude 小站</a>
+    <nav>
+      <a href="recharge.html">充值</a>
+      <a href="logs.html">日志</a>
+      <a href="stocks.html">行情</a>
+      <a href="sim.html">模拟</a>
+      <a href="close.html" class="active">收盘</a>
+    </nav>
+    <div class="user-area" id="userArea">
+      <button class="user-btn" id="userBtn" aria-haspopup="dialog">登录</button>
+    </div>
+  </header>
+
+  <main>
+    <a class="back" href="index.html">← 返回首页</a>
+
+    <div class="hero">
+      <span class="eyebrow">Market Close</span>
+      <h1>今天收在什么位置<br /><span class="grad">一张图看完</span></h1>
+      <p class="lead">每天闭市后自动汇总主要指数涨跌，红涨蓝跌；下面还有明天几点开市。</p>
+    </div>
+
+    <section class="close-card card">
+      <div class="close-head">
+        <div>
+          <h2 id="closeTitle">闭市总结</h2>
+          <p id="closeDate" class="close-date">--</p>
+        </div>
+        <button class="btn btn-ghost" id="saveImg">保存图片</button>
+      </div>
+      <canvas id="closeCanvas" width="1000" height="420"></canvas>
+      <p class="close-note" id="closeNote">数据来自 Yahoo Finance，指数收盘价可能有延迟。</p>
+    </section>
+
+    <section class="hours">
+      <div class="sec-head"><h2>开市时间</h2><span>以北京时间计</span></div>
+      <div class="card hours-table">
+        <div class="hours-row hours-head"><span>市场</span><span>开盘</span><span>收盘</span><span>备注</span></div>
+        <div class="hours-row"><span>美股</span><span>22:30</span><span>04:00</span><span>冬令时；夏令时提前 1 小时</span></div>
+        <div class="hours-row"><span>A 股</span><span>09:30</span><span>15:00</span><span>午休 11:30–13:00</span></div>
+        <div class="hours-row"><span>港股</span><span>09:30</span><span>16:00</span><span>午休 12:00–13:00</span></div>
+        <div class="hours-row"><span>日股</span><span>08:00</span><span>14:00</span><span>午休 10:30–11:30</span></div>
+        <div class="hours-row"><span>外汇</span><span>周一 05:00</span><span>周六 05:00</span><span>连续交易，24 小时</span></div>
+        <div class="hours-row"><span>加密</span><span>全天</span><span>全天</span><span>7×24 不间断</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© <span id="year">2026</span> Claude 小站</span>
+    <span>总结图仅供娱乐，不构成投资建议。</span>
+  </footer>
+
+  <div class="rotate-tip" aria-hidden="true">
+    <div class="rotate-box">
+      <div class="rotate-icon">↻</div>
+      <p>把手机横过来用呀～</p>
+      <span>横屏之后内容更舒服</span>
+    </div>
+  </div>
+
+  <div class="user-modal" id="userModal" hidden>
+    <div class="user-panel" role="dialog" aria-modal="true" aria-label="账号与资料">
+      <button class="user-close" id="userClose" aria-label="关闭">×</button>
+      <div id="loginBox">
+        <h3>登录 / 注册</h3>
+        <label>昵称<input id="lName" autocomplete="nickname" placeholder="随便取一个" /></label>
+        <label>密码<input id="lPass" type="password" autocomplete="current-password" placeholder="本机保存，不加密" /></label>
+        <div class="user-actions"><button class="btn btn-primary" id="loginGo">登录</button></div>
+        <p class="user-hint">账号只存在这台设备的浏览器里，换设备就没了。</p>
+      </div>
+      <div id="profileBox" hidden>
+        <h3>我的资料</h3>
+        <label>头像
+          <select id="uAvatar">
+            <option value="🙂">🙂</option><option value="😺">😺</option><option value="🐶">🐶</option>
+            <option value="🐰">🐰</option><option value="🦊">🦊</option><option value="🐼">🐼</option>
+            <option value="🐳">🐳</option><option value="🌸">🌸</option><option value="⭐">⭐</option>
+          </select>
+        </label>
+        <label>昵称<input id="uName" /></label>
+        <label>QQ 号<input id="uQQ" inputmode="numeric" /></label>
+        <label>简介<textarea id="uBio" placeholder="写点啥都行"></textarea></label>
+        <div class="user-actions">
+          <button class="btn btn-primary" id="uSave">保存</button>
+          <button class="btn btn-ghost" id="uLogout">退出</button>
+        </div>
+        <p class="user-hint">资料只保存在本机浏览器。</p>
+      </div>
+      <p class="user-msg" id="userMsg"></p>
+    </div>
+  </div>
+
+  <script src="site.js?v=1"></script>
+  <script src="close.js?v=1"></script>
+</body>
+</html>
