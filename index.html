@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Claude 小站 · 首页</title>
 <meta name="description" content="给 Mika 的 Claude 小站：充米米、查日志、查股股。" />
-<link rel="stylesheet" href="style.css?v=12" />
+<link rel="stylesheet" href="style.css?v=13" />
 </head>
 <body>
   <div class="glow" aria-hidden="true"></div>
@@ -17,6 +17,10 @@
       <a href="logs.html">日志</a>
       <a href="stocks.html">行情</a>
     </nav>
+
+    <div class="user-area" id="userArea">
+      <button class="user-btn" id="userBtn" aria-haspopup="dialog">登录</button>
+    </div>
   </header>
 
   <main>
@@ -177,5 +181,38 @@
       <span>横屏之后内容更舒服</span>
     </div>
   </div>
+
+  <div class="user-modal" id="userModal" hidden>
+    <div class="user-panel" role="dialog" aria-modal="true" aria-label="账号与资料">
+      <button class="user-close" id="userClose" aria-label="关闭">×</button>
+      <div id="loginBox">
+        <h3>登录 / 注册</h3>
+        <label>昵称<input id="lName" autocomplete="nickname" placeholder="随便取一个" /></label>
+        <label>密码<input id="lPass" type="password" autocomplete="current-password" placeholder="本机保存，不加密" /></label>
+        <div class="user-actions"><button class="btn btn-primary" id="loginGo">登录</button></div>
+        <p class="user-hint">账号只存在这台设备的浏览器里，换设备就没了。</p>
+      </div>
+      <div id="profileBox" hidden>
+        <h3>我的资料</h3>
+        <label>头像
+          <select id="uAvatar">
+            <option value="🙂">🙂</option><option value="😺">😺</option><option value="🐶">🐶</option>
+            <option value="🐰">🐰</option><option value="🦊">🦊</option><option value="🐼">🐼</option>
+            <option value="🐳">🐳</option><option value="🌸">🌸</option><option value="⭐">⭐</option>
+          </select>
+        </label>
+        <label>昵称<input id="uName" /></label>
+        <label>QQ 号<input id="uQQ" inputmode="numeric" /></label>
+        <label>简介<textarea id="uBio" placeholder="写点啥都行"></textarea></label>
+        <div class="user-actions">
+          <button class="btn btn-primary" id="uSave">保存</button>
+          <button class="btn btn-ghost" id="uLogout">退出</button>
+        </div>
+        <p class="user-hint">资料只保存在本机浏览器。</p>
+      </div>
+      <p class="user-msg" id="userMsg"></p>
+    </div>
+  </div>
+  <script src="site.js?v=1"></script>
 </body>
 </html>
