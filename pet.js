@@ -151,10 +151,21 @@
     }
 
 
+    var paidTimer = null;
     function setPaid() {
       opts.paidFixed = true;
       clearTimeout(backTimer);
-      if (imgEl) imgEl.src = PAID_IMG;
+      clearTimeout(paidTimer);
+      if (imgEl) {
+        imgEl.src = PAID_IMG;
+        imgEl.classList.remove('fade');
+        void imgEl.offsetWidth;
+        imgEl.classList.add('fade');
+      }
+      paidTimer = setTimeout(function () {
+        opts.paidFixed = false;
+        render(DEFAULT, true);
+      }, 8000);
     }
 
     var d = PETS[DEFAULT].text[curLang()] || PETS[DEFAULT].text['zh-Hans'];
@@ -169,7 +180,6 @@
 
   if (hero && heroImg) {
     var pet = avatar(hero, heroImg, heroBubble, {});
-    heroImg.src = (function(){ try { return localStorage.getItem('claudePaid')==='1' ? PAID_IMG : heroImg.getAttribute('src'); } catch(e){ return heroImg.getAttribute('src'); } })();
     hero.addEventListener('click', function () { pet.poke(); });
     hero.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pet.poke(); }
@@ -229,8 +239,8 @@
 
   document.body.appendChild(el);
 
-  var petApi = avatar(el, img, bub, { paidFixed: isPaid() });
-  if (isPaid()) img.src = PAID_IMG;
+  try { localStorage.removeItem('claudePaid'); } catch (e) {}
+  var petApi = avatar(el, img, bub, {});
 
   if (big) {
     el.addEventListener('click', function () { petApi.poke(); });
@@ -293,7 +303,6 @@
   }, 800);
 
   window.petCelebrate = function () {
-    markPaid();
     petApi.setPaid();
     img.classList.remove('fade');
     void img.offsetWidth;
