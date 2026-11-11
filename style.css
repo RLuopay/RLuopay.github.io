@@ -767,3 +767,12 @@ footer {
 .reward-tip { flex: 1; min-width: 200px; }
 .reward-tip p { margin: 0 0 0.6rem; color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
 .reward-small { font-size: 0.8rem !important; }
+
+/* ---- drink rewards ---- */
+.drink-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.drink { display: flex; flex-direction: column; }
+.drink-ico { font-size: 26px; line-height: 1; }
+.drink-price { font-size: 1.5rem; font-weight: 700; margin: 0.5rem 0 0.2rem; letter-spacing: -0.02em; }
+.drink h3 { margin: 0.2rem 0 0.4rem; font-size: 0.98rem; line-height: 1.5; }
+.drink p { margin: 0 0 0.9rem; color: var(--muted); font-size: 0.84rem; line-height: 1.6; flex: 1; }
+.drink .btn { width: auto; align-self: flex-start; padding: 0.42rem 1rem; font-size: 0.84rem; }
