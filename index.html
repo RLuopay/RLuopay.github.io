@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Claude 小站 · 首页</title>
 <meta name="description" content="给 Mika 的 Claude 小站：充米米、查日志、查股股。" />
-<link rel="stylesheet" href="style.css?v=20" />
+<link rel="stylesheet" href="style.css?v=22" />
 </head>
 <body>
   <div class="glow" aria-hidden="true"></div>
@@ -34,7 +34,7 @@
       </div>
 
       <div class="hero-pet">
-        <div class="pet-bubble" id="petBubble">有事就戳我一下～</div>
+        <div class="pet-bubble" id="petBubble" data-i18n-skip="1">有事就戳我一下～</div>
         <div class="pet" id="pet" role="button" tabindex="0" aria-label="和 Claude 互动">
           <img class="pet-img" id="petImg" src="assets/pet/pet3.webp" alt="Claude 小管家" />
         </div>
@@ -121,59 +121,6 @@
       layout();
     })();
 
-    /* Claude 桌宠 */
-    (function () {
-      var pet = document.getElementById('pet');
-      var img = document.getElementById('petImg');
-      var bubble = document.getElementById('petBubble');
-      var pets = [
-        { src: 'assets/pet/pet1.webp', lines: ['哼，才不是等你呢。', '再不来我就自己玩了…', '戳那么重干嘛啦！', '今天也是我等你哦。', '别笑，我认真的。'] },
-        { src: 'assets/pet/pet2.webp', lines: ['谢谢主人～最喜欢你了。', '今天也要开开心心的哦。', '帮你许了个小愿望。', '我很好哄的，真的。', '嘿嘿，被戳到心里啦。'] },
-        { src: 'assets/pet/pet3.webp', lines: ['有事就戳我一下。', '我是这里的小管家。', '要不要看看套餐呀？', '书拿反了…才没有。', '今天也好好陪着你。'] },
-        { src: 'assets/pet/pet4.webp', lines: ['偷偷吃一口，不给你。', '面包比作业香。', '饿了吧？我也饿。', '吃完这口就干活！', '不许笑我吃相。'] },
-        { src: 'assets/pet/pet5.webp', lines: ['哼哼～今天心情超好。', '唱歌给你听要不要？', '啦啦啦～', '转个圈给你看。', '开心的时候要分享呀。'] },
-        { src: 'assets/pet/pet6.webp', lines: ['在想人生的意义…还是算了。', '无聊的时候就这么坐着。', '你忙你的，我陪你。', '偷看一下你在干嘛。', '发呆也是工作的一部分。'] },
-        { src: 'assets/pet/pet7.webp?v=2', lines: ['哇！这个好好玩！', '你刚才说什么？再说一遍！', '真的吗真的吗？', '眼睛在发光呢～', '好厉害，再来一次！'] },
-        { src: 'assets/pet/pet8.webp', lines: ['这个字念什么来着…', '看不懂，但装懂。', '你懂的话教教我嘛。', '书里怎么没有写你？', '疑惑中，请稍后再问。'] },
-        { src: 'assets/pet/pet9.webp', lines: ['送你一朵花，别嫌弃。', '花香很淡，我很喜欢。', '许愿要闭上眼哦。', '今天也要香香的。', '花开得很好，像你一样。'] }
-      ];
-      var DEFAULT = 2;
-      var cur = DEFAULT;
-      var backTimer, hideTimer;
-      function say(idx) {
-        bubble.textContent = pets[idx].lines[Math.floor(Math.random() * pets[idx].lines.length)];
-        bubble.classList.add('show');
-        clearTimeout(hideTimer);
-        hideTimer = setTimeout(function () { bubble.classList.remove('show'); }, 4200);
-      }
-      function render(idx) {
-        img.classList.remove('fade'); void img.offsetWidth;
-        img.src = pets[idx].src;
-        img.classList.add('fade');
-        cur = idx;
-      }
-      function poke() {
-        var n = cur;
-        while (pets.length > 1 && n === cur) { n = Math.floor(Math.random() * pets.length); }
-        render(n);
-        say(n);
-        pet.classList.remove('wiggle'); void pet.offsetWidth; pet.classList.add('wiggle');
-        setTimeout(function () { pet.classList.remove('wiggle'); }, 560);
-        clearTimeout(backTimer);
-        backTimer = setTimeout(function () {
-          render(DEFAULT);
-          bubble.textContent = '有事就戳我一下～';
-          bubble.classList.add('show');
-          clearTimeout(hideTimer);
-          hideTimer = setTimeout(function () { bubble.classList.remove('show'); }, 4200);
-        }, 5000);
-      }
-      pet.addEventListener('click', poke);
-      pet.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); poke(); }
-      });
-      say(DEFAULT);
-    })();
   </script>
 
   <div class="rotate-tip" aria-hidden="true">
@@ -222,6 +169,7 @@
     </div>
   </div>
   <script src="site.js?v=3"></script>
-  <script src="i18n.js?v=3"></script>
+  <script src="pet.js?v=1"></script>
+  <script src="i18n.js?v=4"></script>
 </body>
 </html>
