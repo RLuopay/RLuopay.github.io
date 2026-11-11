@@ -16,16 +16,31 @@
     var key = 'y:' + path;
     var hit = getCached(key);
     if (hit) return Promise.resolve(hit);
-    var url = BASE + path, idx = 0;
-    function attempt() {
-      if (idx >= PROXIES.length) return Promise.reject(new Error('proxy'));
-      var p = PROXIES[idx++](url);
-      return fetch(p, { cache: 'no-store' })
-        .then(function (r) { if (!r.ok) throw new Error('http'); return r.json(); })
-        .then(function (d) { putCached(key, d); return d; })
-        .catch(function () { return attempt(); });
+    var url = BASE + path;
+
+    function once() {
+      var idx = 0;
+      function attempt() {
+        if (idx >= PROXIES.length) return Promise.reject(new Error('proxy'));
+        var p = PROXIES[idx++](url);
+        return fetch(p, { cache: 'no-store' })
+          .then(function (r) { if (!r.ok) throw new Error('http'); return r.json(); })
+          .catch(function () { return attempt(); });
+      }
+      return attempt();
     }
-    return attempt();
+
+    function retry(left) {
+      return once()
+        .then(function (d) { putCached(key, d); return d; })
+        .catch(function (e) {
+          if (left <= 0) throw e;
+          var wait = 1200 * (3 - left);
+          return new Promise(function (res) { setTimeout(res, wait); })
+            .then(function () { return retry(left - 1); });
+        });
+    }
+    return retry(2);
   }
 
   var chartEl = document.getElementById('chart');
@@ -162,29 +177,42 @@
     loadChart(state.symbol, state.range, state.interval);
   });
 
-  /* FX */
-  var FX = [['USD / CNY', 'CNY=X'], ['EUR / CNY', 'EURCNY=X'], ['JPY / CNY', 'JPYCNY=X'], ['HKD / CNY', 'HKDCNY=X']];
+  /* FX：open.er-api（无代理，带 CORS） */
+  var FX = [['USD / CNY', 'CNY'], ['EUR / CNY', 'EUR'], ['JPY / CNY', 'JPY'], ['HKD / CNY', 'HKD']];
+  var fxCache = { t: 0, rates: null };
   function loadFx() {
     var grid = document.getElementById('fxGrid');
     grid.innerHTML = '';
-    FX.forEach(function (pair) {
+    FX.forEach(function (p) {
       var card = document.createElement('div');
       card.className = 'card fx-card';
-      card.innerHTML = '<div class="fx-pair">' + pair[0] + '</div><div class="fx-val">--</div><div class="fx-chg">加载中</div>';
+      card.innerHTML = '<div class="fx-pair">' + p[0] + '</div><div class="fx-val">--</div><div class="fx-chg">加载中</div>';
       grid.appendChild(card);
-      fetchYahoo('/v8/finance/chart/' + encodeURIComponent(pair[1]) + '?range=5d&interval=1d')
-        .then(function (d) {
-          var m = d.chart.result[0].meta, p = m.regularMarketPrice, prev = m.chartPreviousClose;
-          card.querySelector('.fx-val').textContent = p != null ? p.toFixed(4) : '--';
-          var chg = card.querySelector('.fx-chg');
-          if (p != null && prev) {
-            var pc = (p - prev) / prev * 100;
-            chg.textContent = (pc >= 0 ? '+' : '') + pc.toFixed(2) + '%';
-            chg.className = 'fx-chg ' + (pc >= 0 ? 'up' : 'down');
-          } else { chg.textContent = ''; }
-        })
-        .catch(function () { card.querySelector('.fx-chg').textContent = '加载失败'; });
     });
+    fetch('https://open.er-api.com/v6/latest/USD', { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var rates = d.rates || {};
+        fxCache = { t: Date.now(), rates: rates };
+        var vals = {
+          'USD / CNY': rates.CNY,
+          'EUR / CNY': rates.CNY / rates.EUR,
+          'JPY / CNY': rates.CNY / rates.JPY,
+          'HKD / CNY': rates.CNY / rates.HKD
+        };
+        Array.prototype.forEach.call(grid.children, function (card, i) {
+          var v = vals[FX[i][0]];
+          card.querySelector('.fx-val').textContent = v != null ? v.toFixed(4) : '--';
+          var chg = card.querySelector('.fx-chg');
+          chg.textContent = d.time_last_update_utc ? '每日更新' : '';
+          chg.className = 'fx-chg';
+        });
+      })
+      .catch(function () {
+        Array.prototype.forEach.call(grid.children, function (card) {
+          card.querySelector('.fx-chg').textContent = '加载失败';
+        });
+      });
   }
 
   /* news */
