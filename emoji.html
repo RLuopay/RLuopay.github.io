@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>表情库 · Claude 小站</title>
 <meta name="description" content="Claude 小表情库，点一下就能下载。" />
-<link rel="stylesheet" href="style.css?v=25" />
+<link rel="stylesheet" href="style.css?v=26" />
 </head>
 <body>
   <div class="glow" aria-hidden="true"></div>
@@ -33,19 +33,26 @@
       <p class="lead">九个小表情，点开下载，拿去当头像或表情包都行。</p>
     </div>
 
-    <section>
-      <div class="emoji-grid" id="emojiGrid">
-        <a class="emoji-card" href="assets/pet/pet1.webp" download="claude-01.webp"><img src="assets/pet/pet1.webp" alt="Claude 表情 1" loading="lazy" /></a>
-        <a class="emoji-card" href="assets/pet/pet2.webp" download="claude-02.webp"><img src="assets/pet/pet2.webp" alt="Claude 表情 2" loading="lazy" /></a>
-        <a class="emoji-card" href="assets/pet/pet3.webp" download="claude-03.webp"><img src="assets/pet/pet3.webp" alt="Claude 表情 3" loading="lazy" /></a>
-        <a class="emoji-card" href="assets/pet/pet4.webp" download="claude-04.webp"><img src="assets/pet/pet4.webp" alt="Claude 表情 4" loading="lazy" /></a>
-        <a class="emoji-card" href="assets/pet/pet5.webp" download="claude-05.webp"><img src="assets/pet/pet5.webp" alt="Claude 表情 5" loading="lazy" /></a>
-        <a class="emoji-card" href="assets/pet/pet6.webp" download="claude-06.webp"><img src="assets/pet/pet6.webp" alt="Claude 表情 6" loading="lazy" /></a>
-        <a class="emoji-card" href="assets/pet/pet7.webp" download="claude-07.webp"><img src="assets/pet/pet7.webp" alt="Claude 表情 7" loading="lazy" /></a>
-        <a class="emoji-card" href="assets/pet/pet8.webp" download="claude-08.webp"><img src="assets/pet/pet8.webp" alt="Claude 表情 8" loading="lazy" /></a>
-        <a class="emoji-card" href="assets/pet/pet9.webp" download="claude-09.webp"><img src="assets/pet/pet9.webp" alt="Claude 表情 9" loading="lazy" /></a>
+    <section class="emoji-layout">
+      <div>
+        <div class="emoji-grid" id="emojiGrid">
+          <button class="emoji-card" type="button" data-src="assets/pet/pet1.webp" data-name="claude-01.webp"><img src="assets/pet/pet1.webp" alt="Claude 表情 1" loading="lazy" /></button>
+          <button class="emoji-card" type="button" data-src="assets/pet/pet2.webp" data-name="claude-02.webp"><img src="assets/pet/pet2.webp" alt="Claude 表情 2" loading="lazy" /></button>
+          <button class="emoji-card" type="button" data-src="assets/pet/pet3.webp" data-name="claude-03.webp"><img src="assets/pet/pet3.webp" alt="Claude 表情 3" loading="lazy" /></button>
+          <button class="emoji-card" type="button" data-src="assets/pet/pet4.webp" data-name="claude-04.webp"><img src="assets/pet/pet4.webp" alt="Claude 表情 4" loading="lazy" /></button>
+          <button class="emoji-card" type="button" data-src="assets/pet/pet5.webp" data-name="claude-05.webp"><img src="assets/pet/pet5.webp" alt="Claude 表情 5" loading="lazy" /></button>
+          <button class="emoji-card" type="button" data-src="assets/pet/pet6.webp" data-name="claude-06.webp"><img src="assets/pet/pet6.webp" alt="Claude 表情 6" loading="lazy" /></button>
+          <button class="emoji-card" type="button" data-src="assets/pet/pet7.webp" data-name="claude-07.webp"><img src="assets/pet/pet7.webp" alt="Claude 表情 7" loading="lazy" /></button>
+          <button class="emoji-card" type="button" data-src="assets/pet/pet8.webp" data-name="claude-08.webp"><img src="assets/pet/pet8.webp" alt="Claude 表情 8" loading="lazy" /></button>
+          <button class="emoji-card" type="button" data-src="assets/pet/pet9.webp" data-name="claude-09.webp"><img src="assets/pet/pet9.webp" alt="Claude 表情 9" loading="lazy" /></button>
+        </div>
+        <p class="note">点一下先在右上角放大看，再点大图才下载。</p>
       </div>
-      <p class="note">点一下就下载；手机可以长按图片保存。</p>
+
+      <div class="emoji-preview" id="emojiPreview">
+        <img id="previewImg" src="assets/pet/pet3.webp" alt="预览" />
+        <p id="previewHint">再点一下大图就下载</p>
+      </div>
     </section>
   </main>
 
@@ -100,6 +107,36 @@
     </div>
   </div>
 
+  <script>
+    (function () {
+      var preview = document.getElementById('emojiPreview');
+      var img = document.getElementById('previewImg');
+      var hint = document.getElementById('previewHint');
+      var curName = 'claude-03.webp';
+      var cards = document.querySelectorAll('.emoji-card');
+      Array.prototype.forEach.call(cards, function (c) {
+        c.addEventListener('click', function () {
+          img.src = c.getAttribute('data-src');
+          curName = c.getAttribute('data-name');
+          hint.textContent = '再点一下大图就下载';
+          preview.classList.add('pop');
+          setTimeout(function () { preview.classList.remove('pop'); }, 300);
+          Array.prototype.forEach.call(cards, function (x) { x.classList.remove('on'); });
+          c.classList.add('on');
+        });
+      });
+      preview.addEventListener('click', function () {
+        var a = document.createElement('a');
+        a.href = img.getAttribute('src');
+        a.download = curName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        hint.textContent = '已开始下载～';
+        setTimeout(function () { hint.textContent = '再点一下大图就下载'; }, 2200);
+      });
+    })();
+  </script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
