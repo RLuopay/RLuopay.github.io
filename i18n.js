@@ -209,36 +209,69 @@
     });
   }
 
-  function buildSwitcher() {
-    var header = document.querySelector('header');
-    if (!header || header.querySelector('.lang-switch')) return;
-    var wrap = document.createElement('div');
-    wrap.className = 'lang-switch';
-    wrap.innerHTML =
-      '<button data-lang="zh-Hans">简</button>' +
-      '<button data-lang="zh-Hant">繁</button>' +
-      '<button data-lang="en">EN</button>';
-    var ua = header.querySelector('.user-area');
-    if (ua) header.insertBefore(wrap, ua); else header.appendChild(wrap);
-    wrap.addEventListener('click', function (e) {
-      var b = e.target.closest('button[data-lang]');
-      if (!b) return;
-      lang = b.getAttribute('data-lang');
-      localStorage.setItem(LS, lang);
-      document.documentElement.setAttribute('lang', lang === 'en' ? 'en' : lang === 'zh-Hant' ? 'zh-Hant' : 'zh-CN');
-      scan(document.body);
-      mark();
+  var pop = null;
+
+  function closePop() {
+    if (pop) { pop.remove(); pop = null; }
+    document.removeEventListener('click', onOutside, true);
+  }
+  function onOutside(e) {
+    if (!pop) return;
+    if (pop.contains(e.target) || (e.target.closest && e.target.closest('.lang-ball'))) return;
+    closePop();
+  }
+
+  function chooseLang(next) {
+    lang = next;
+    localStorage.setItem(LS, lang);
+    document.documentElement.setAttribute('lang', lang === 'en' ? 'en' : lang === 'zh-Hant' ? 'zh-Hant' : 'zh-CN');
+    scan(document.body);
+    closePop();
+  }
+
+  function openPop(anchor) {
+    closePop();
+    pop = document.createElement('div');
+    pop.className = 'lang-pop';
+    [['zh-Hans', '简体'], ['zh-Hant', '繁體'], ['en', 'English']].forEach(function (it) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = it[1];
+      if (lang === it[0]) b.className = 'on';
+      b.addEventListener('click', function (e) { e.stopPropagation(); chooseLang(it[0]); });
+      pop.appendChild(b);
     });
-    function mark() {
-      Array.prototype.forEach.call(wrap.children, function (b) {
-        b.classList.toggle('on', b.getAttribute('data-lang') === lang);
+    document.body.appendChild(pop);
+    var r = anchor.getBoundingClientRect();
+    var pw = pop.offsetWidth || 96;
+    var left = Math.min(Math.max(8, r.left + r.width / 2 - pw / 2), window.innerWidth - pw - 8);
+    pop.style.left = left + 'px';
+    pop.style.top = (r.bottom + 6) + 'px';
+    setTimeout(function () { document.addEventListener('click', onOutside, true); }, 0);
+  }
+
+  function buildBalls() {
+    var nav = document.querySelector('header nav');
+    if (!nav || nav.querySelector('.lang-ball')) return;
+    var links = nav.querySelectorAll('a');
+    Array.prototype.forEach.call(links, function (a) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'lang-ball';
+      b.setAttribute('aria-label', 'Language / 语言 / 語言');
+      b.textContent = '🌐';
+      b.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (pop) { closePop(); return; }
+        openPop(b);
       });
-    }
-    mark();
+      a.parentNode.insertBefore(b, a.nextSibling);
+    });
   }
 
   function start() {
-    buildSwitcher();
+    buildBalls();
     scan(document.body);
     document.documentElement.setAttribute('lang', lang === 'en' ? 'en' : lang === 'zh-Hant' ? 'zh-Hant' : 'zh-CN');
     if (window.MutationObserver) {
