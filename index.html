@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Claude 小站 · 首页</title>
 <meta name="description" content="给 Mika 的 Claude 小站：充米米、查日志、查股股。" />
-<link rel="stylesheet" href="style.css?v=19" />
+<link rel="stylesheet" href="style.css?v=20" />
 </head>
 <body>
   <div class="glow" aria-hidden="true"></div>
@@ -188,11 +188,17 @@
     <div class="user-panel" role="dialog" aria-modal="true" aria-label="账号与资料">
       <button class="user-close" id="userClose" aria-label="关闭">×</button>
       <div id="loginBox">
-        <h3>登录 / 注册</h3>
-        <label>昵称<input id="lName" autocomplete="nickname" placeholder="随便取一个" /></label>
-        <label>密码<input id="lPass" type="password" autocomplete="current-password" placeholder="本机保存，不加密" /></label>
-        <div class="user-actions"><button class="btn btn-primary" id="loginGo">登录</button></div>
-        <p class="user-hint">账号只存在这台设备的浏览器里，换设备就没了。</p>
+        <h3>登录</h3>
+        <div class="login-tabs" id="loginTabs">
+          <button type="button" data-provider="wechat" class="on">微信</button>
+          <button type="button" data-provider="qq">QQ</button>
+          <button type="button" data-provider="email">邮箱</button>
+        </div>
+        <label><span id="acctLabel">微信号</span><input id="lAccount" placeholder="输入微信号" autocomplete="off" /></label>
+        <label>昵称（可选）<input id="lName" autocomplete="nickname" placeholder="随便取一个" /></label>
+        <label id="passWrap" hidden>密码<input id="lPass" type="password" autocomplete="current-password" placeholder="邮箱登录需要密码" /></label>
+        <div class="user-actions"><button class="btn btn-primary" id="loginGo">登录 / 注册</button></div>
+        <p class="user-hint">本地模拟登录，账号只存在这台浏览器里，换设备就没了。</p>
       </div>
       <div id="profileBox" hidden>
         <h3>我的资料</h3>
@@ -215,7 +221,7 @@
       <p class="user-msg" id="userMsg"></p>
     </div>
   </div>
-  <script src="site.js?v=1"></script>
-  <script src="i18n.js?v=2"></script>
+  <script src="site.js?v=3"></script>
+  <script src="i18n.js?v=3"></script>
 </body>
 </html>
