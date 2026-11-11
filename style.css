@@ -799,3 +799,7 @@ footer {
   font-size: 1rem; border: 1px dashed var(--line); border-radius: 12px;
 }
 @media (max-width: 640px) { .fb-row { grid-template-columns: 1fr; } }
+
+/* feedback message */
+.fb-msg { margin: 0.7rem 0 0; font-size: 0.8rem; color: var(--muted); min-height: 1em; }
+.fb-copy { width: auto; margin-top: 0.6rem; padding: 0.4rem 1rem; font-size: 0.82rem; }
