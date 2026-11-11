@@ -374,3 +374,58 @@ footer {
     50% { transform: rotate(90deg); }
   }
 }
+
+/* ---- account / profile ---- */
+.user-area { display: flex; align-items: center; }
+.user-btn {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.34rem 0.75rem; border-radius: 999px;
+  border: 1px solid var(--line); background: #FCFBFA; color: var(--fg);
+  font-size: 0.84rem; cursor: pointer; font-family: inherit;
+  transition: background 0.15s;
+}
+.user-btn:hover { background: #F3F1EF; }
+.user-avatar {
+  width: 24px; height: 24px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 13px;
+  background: linear-gradient(150deg, #FFFFFF, #DDD9D6);
+  border: 1px solid var(--line);
+}
+.user-name { max-width: 8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.user-modal {
+  position: fixed; inset: 0; z-index: 900;
+  display: grid; place-items: center;
+  background: rgba(27, 26, 25, 0.35);
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+}
+.user-modal[hidden] { display: none; }
+.user-panel {
+  position: relative; width: min(360px, 90vw);
+  background: #FFFFFF; border-radius: 16px;
+  border: 1px solid var(--line-soft); padding: 1.4rem;
+  box-shadow: 0 30px 70px -34px rgba(27, 26, 25, 0.6);
+}
+.user-panel h3 { margin: 0 0 1rem; font-size: 1.05rem; }
+.user-panel label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 0.72rem; }
+.user-panel input, .user-panel textarea, .user-panel select {
+  width: 100%; margin-top: 0.35rem; padding: 0.55rem 0.7rem;
+  border-radius: 8px; border: 1px solid var(--line); background: var(--field);
+  color: var(--fg); font-family: inherit; font-size: 0.88rem;
+}
+.user-panel textarea { min-height: 64px; resize: vertical; }
+.user-panel input:focus, .user-panel textarea:focus, .user-panel select:focus {
+  outline: none; background: #FFFFFF; border-color: var(--accent-soft);
+  box-shadow: 0 0 0 3px rgba(135, 133, 134, 0.16);
+}
+.user-actions { display: flex; gap: 0.6rem; margin-top: 0.4rem; }
+.user-actions .btn { width: auto; flex: 1; }
+.user-hint { margin: 0.8rem 0 0; font-size: 0.74rem; color: var(--muted); line-height: 1.6; }
+.user-msg { margin: 0.6rem 0 0; min-height: 1em; font-size: 0.78rem; color: var(--red); }
+.user-close {
+  position: absolute; top: 0.7rem; right: 0.7rem;
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--line); background: #FCFBFA; color: var(--muted);
+  cursor: pointer; font-size: 16px; line-height: 1; font-family: inherit;
+}
+.user-close:hover { background: #F3F1EF; color: var(--fg); }
+@media (max-width: 640px) { .user-name { display: none; } }
