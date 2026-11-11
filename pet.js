@@ -151,9 +151,15 @@
     }
 
 
+    function setPaid() {
+      opts.paidFixed = true;
+      clearTimeout(backTimer);
+      if (imgEl) imgEl.src = PAID_IMG;
+    }
+
     var d = PETS[DEFAULT].text[curLang()] || PETS[DEFAULT].text['zh-Hans'];
     say(d[Math.floor(Math.random() * d.length)]);
-    return { poke: poke, say: say };
+    return { poke: poke, say: say, setPaid: setPaid };
   }
 
   /* ---------- home page hero pet ---------- */
@@ -223,7 +229,7 @@
 
   document.body.appendChild(el);
 
-  var petApi = avatar(el, img, bub, { paidFixed: big && isPaid() });
+  var petApi = avatar(el, img, bub, { paidFixed: isPaid() });
   if (isPaid()) img.src = PAID_IMG;
 
   if (big) {
@@ -288,7 +294,7 @@
 
   window.petCelebrate = function () {
     markPaid();
-    img.src = PAID_IMG;
+    petApi.setPaid();
     img.classList.remove('fade');
     void img.offsetWidth;
     img.classList.add('fade');
