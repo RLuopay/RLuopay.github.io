@@ -931,3 +931,11 @@ footer {
 @media (max-width: 640px) {
   .visitor-pill { right: 12px; bottom: 12px; font-size: 0.7rem; padding: 0.36rem 0.64rem; }
 }
+
+/* per-position profit/loss mark */
+.pos-item { position: relative; padding-right: 3.2rem; }
+.pos-mood {
+  position: absolute; right: 0.7rem; top: 0.7rem;
+  width: 38px; height: auto; opacity: 0.9; pointer-events: none;
+}
+@media (max-width: 640px) { .pos-mood { width: 30px; } }
