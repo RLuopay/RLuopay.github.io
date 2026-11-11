@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>查股股 · Claude 小站</title>
-<meta name="description" content="Yahoo Finance 行情、K 线、汇率与模拟投资。" />
-<link rel="stylesheet" href="style.css?v=16" />
+<title>行情 · Claude 小站</title>
+<meta name="description" content="Yahoo Finance 行情、K 线、汇率与相关新闻。" />
+<link rel="stylesheet" href="style.css?v=18" />
 <script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
@@ -17,6 +17,8 @@
       <a href="recharge.html">充值</a>
       <a href="logs.html">日志</a>
       <a href="stocks.html" class="active">行情</a>
+      <a href="sim.html">模拟</a>
+      <a href="close.html">收盘</a>
     </nav>
     <div class="user-area" id="userArea">
       <button class="user-btn" id="userBtn" aria-haspopup="dialog">登录</button>
@@ -28,8 +30,8 @@
 
     <div class="hero">
       <span class="eyebrow">Markets</span>
-      <h1>看行情，也练练手<br /><span class="grad">K 线 · 汇率 · 模拟盘</span></h1>
-      <p class="lead">数据来自 Yahoo Finance（经公共代理，可能有延迟）；模拟盘是虚拟资金，别当真。</p>
+      <h1>看行情<br /><span class="grad">K 线 · 汇率 · 新闻</span></h1>
+      <p class="lead">数据来自 Yahoo Finance（经公共代理，可能有延迟）。红涨蓝跌，看 K 线更顺手。</p>
     </div>
 
     <section class="market">
@@ -54,6 +56,7 @@
         <div class="ranges" id="ranges">
           <button data-range="5d">5D</button>
           <button data-range="1mo" class="on">1M</button>
+          <button data-range="60m">60分</button>
           <button data-range="6mo">6M</button>
           <button data-range="1y">1Y</button>
           <button data-range="5y">5Y</button>
@@ -68,48 +71,15 @@
       <div class="fx-grid" id="fxGrid"></div>
     </section>
 
-    <section class="sim">
-      <div class="sec-head"><h2>模拟投资</h2><span>虚拟资金 · 本地保存</span></div>
-      <div class="sim-grid">
-        <div class="card sim-panel">
-          <div class="sim-stats">
-            <div class="sim-stat"><span>可用现金</span><b id="simCash">¥ 100,000</b></div>
-            <div class="sim-stat"><span>总权益</span><b id="simEquity">¥ 100,000</b></div>
-          </div>
-
-          <div class="dir-switch" id="dirSwitch">
-            <button data-dir="long" class="on">做多</button>
-            <button data-dir="short">做空</button>
-          </div>
-
-          <label class="sim-field">保证金
-            <input id="simMargin" type="number" value="1000" min="10" step="100" />
-          </label>
-
-          <label class="sim-field">杠杆 <b id="levVal">10×</b>
-            <input id="simLev" type="range" min="1" max="500" value="10" />
-          </label>
-
-          <div class="sim-hint" id="simHint">开仓后反向 10% 就爆仓，500× 时 0.2% 就没了。</div>
-
-          <div class="sim-actions">
-            <button class="btn btn-primary" id="openPos">开仓</button>
-            <button class="btn btn-ghost" id="resetSim">重置账户</button>
-          </div>
-          <p class="sim-note">纯模拟，不涉及真实资金，别把这里的数字当收益。</p>
-        </div>
-
-        <div class="card">
-          <div class="positions-head">持仓 <span id="posCount"></span></div>
-          <div class="positions" id="positions">还没有持仓</div>
-        </div>
-      </div>
+    <section class="news">
+      <div class="sec-head"><h2>相关新闻</h2><span id="newsFor">AAPL</span></div>
+      <div class="news-list" id="newsList">加载中…</div>
     </section>
   </main>
 
   <footer>
     <span>© <span id="year">2026</span> Claude 小站</span>
-    <span>行情来自 Yahoo Finance，可能有延迟；模拟盘仅供娱乐。</span>
+    <span>行情来自 Yahoo Finance，可能有延迟；新闻为第三方内容。</span>
   </footer>
 
   <div class="rotate-tip" aria-hidden="true">
@@ -153,6 +123,6 @@
   </div>
 
   <script src="site.js?v=1"></script>
-  <script src="stocks.js?v=1"></script>
+  <script src="stocks.js?v=2"></script>
 </body>
 </html>
