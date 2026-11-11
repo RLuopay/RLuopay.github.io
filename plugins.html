@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>公共插件 · Claude 小站</title>
+<meta name="description" content="收集一些好玩的浏览器插件，点进去自己看。" />
+<link rel="stylesheet" href="style.css?v=32" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header>
+    <a class="brand" href="index.html"><span class="mark">◈</span> Claude 小站</a>
+    <nav>
+      <a href="recharge.html">赞赏</a>
+      <a href="emoji.html">表情</a>
+      <a href="stocks.html">行情</a>
+      <a href="sim.html">模拟</a>
+      <a href="close.html">收盘</a>
+      <a href="plugins.html" class="active">插件</a>
+    </nav>
+    <div class="user-area" id="userArea">
+      <button class="user-btn" id="userBtn" aria-haspopup="dialog">登录</button>
+    </div>
+  </header>
+
+  <main>
+    <a class="back" href="index.html">← 返回首页</a>
+
+    <div class="hero">
+      <span class="eyebrow">Plugins</span>
+      <h1>公共插件<br /><span class="grad">好玩的那种</span></h1>
+      <p class="lead">平时收集的好玩插件，点名字去商店或官网自己看；装之前瞄一眼权限。</p>
+    </div>
+
+    <section>
+      <div class="sec-head"><h2>插件清单</h2><span>持续更新</span></div>
+      <div class="plugin-grid">
+        <a class="card plugin" href="https://www.tampermonkey.net/" target="_blank" rel="noopener">
+          <div class="plugin-ico">🧩</div>
+          <h3>Tampermonkey · 油猴</h3>
+          <p>给网页加脚本，广告拦截、签到、改样式都行。</p>
+          <span class="plugin-go">去官网 →</span>
+        </a>
+        <a class="card plugin" href="https://immersivetranslate.com/" target="_blank" rel="noopener">
+          <div class="plugin-ico">🌐</div>
+          <h3>沉浸式翻译</h3>
+          <p>网页、PDF、字幕双语对照，看外文站很舒服。</p>
+          <span class="plugin-go">去官网 →</span>
+        </a>
+        <a class="card plugin" href="https://darkreader.org/" target="_blank" rel="noopener">
+          <div class="plugin-ico">🌙</div>
+          <h3>Dark Reader</h3>
+          <p>给所有网站套上夜间模式，晚上不刺眼。</p>
+          <span class="plugin-go">去官网 →</span>
+        </a>
+        <a class="card plugin" href="https://www.gofullpage.com/" target="_blank" rel="noopener">
+          <div class="plugin-ico">📸</div>
+          <h3>GoFullPage</h3>
+          <p>一键截整页长图，保存成 PNG 或 PDF。</p>
+          <span class="plugin-go">去官网 →</span>
+        </a>
+        <a class="card plugin" href="https://github.com/xifangczy/cat-catch" target="_blank" rel="noopener">
+          <div class="plugin-ico">🎣</div>
+          <h3>猫抓</h3>
+          <p>嗅探网页里的视频和音频，回放或下载都方便。</p>
+          <span class="plugin-go">去仓库 →</span>
+        </a>
+        <a class="card plugin" href="https://chromewebstore.google.com/detail/unscrew-it-a-fidget-exten/dfhmadnmogpmbcldepgnomaipngohikc" target="_blank" rel="noopener">
+          <div class="plugin-ico">🔩</div>
+          <h3>Unscrew It</h3>
+          <p>把网页上的按钮、图片一颗颗拧下来，纯解压。</p>
+          <span class="plugin-go">去商店 →</span>
+        </a>
+        <a class="card plugin" href="https://chromewebstore.google.com/detail/touch-fish/eleccibpobdmpajkdogdelfekmfbplbe" target="_blank" rel="noopener">
+          <div class="plugin-ico">🐟</div>
+          <h3>Touch Fish</h3>
+          <p>把网页伪装成工作界面，偷偷看小说和视频。</p>
+          <span class="plugin-go">去商店 →</span>
+        </a>
+        <a class="card plugin" href="https://github.com/LYiHub/Card-master-browser-extension-public" target="_blank" rel="noopener">
+          <div class="plugin-ico">🃏</div>
+          <h3>Card-master</h3>
+          <p>把浏览器脚本做成卡牌游戏，还能用 AI 生成新卡。</p>
+          <span class="plugin-go">去仓库 →</span>
+        </a>
+        <a class="card plugin" href="https://www.paintbytext.com/" target="_blank" rel="noopener">
+          <div class="plugin-ico">🎨</div>
+          <h3>网页涂鸦</h3>
+          <p>直接在任意网页上画画、圈重点，截图前很有用。</p>
+          <span class="plugin-go">去看看 →</span>
+        </a>
+      </div>
+      <p class="note">清单来自网上收集，装之前留意权限和隐私，别乱给账号密码。</p>
+    </section>
+  </main>
+
+  <footer>
+    <span>© <span id="year">2026</span> Claude 小站</span>
+    <span>插件清单仅供参考，与小站无利益关系。</span>
+  </footer>
+
+  <div class="rotate-tip" aria-hidden="true">
+    <div class="rotate-box">
+      <div class="rotate-icon">↻</div>
+      <p>把手机横过来用呀～</p>
+      <span>横屏之后内容更舒服</span>
+    </div>
+  </div>
+
+  <div class="user-modal" id="userModal" hidden>
+    <div class="user-panel" role="dialog" aria-modal="true" aria-label="账号与资料">
+      <button class="user-close" id="userClose" aria-label="关闭">×</button>
+      <div id="loginBox">
+        <h3>登录</h3>
+        <div class="login-tabs" id="loginTabs">
+          <button type="button" data-provider="wechat" class="on">微信</button>
+          <button type="button" data-provider="qq">QQ</button>
+          <button type="button" data-provider="email">邮箱</button>
+        </div>
+        <label><span id="acctLabel">微信号</span><input id="lAccount" placeholder="输入微信号" autocomplete="off" /></label>
+        <label>昵称（可选）<input id="lName" autocomplete="nickname" placeholder="随便取一个" /></label>
+        <label id="passWrap" hidden>密码<input id="lPass" type="password" autocomplete="current-password" placeholder="邮箱登录需要密码" /></label>
+        <div class="user-actions"><button class="btn btn-primary" id="loginGo">登录 / 注册</button></div>
+        <p class="user-hint">本地模拟登录，账号只存在这台浏览器里，换设备就没了。</p>
+      </div>
+      <div id="profileBox" hidden>
+        <h3>我的资料</h3>
+        <label>头像
+          <select id="uAvatar">
+            <option value="🙂">🙂</option><option value="😺">😺</option><option value="🐶">🐶</option>
+            <option value="🐰">🐰</option><option value="🦊">🦊</option><option value="🐼">🐼</option>
+            <option value="🐳">🐳</option><option value="🌸">🌸</option><option value="⭐">⭐</option>
+          </select>
+        </label>
+        <label>昵称<input id="uName" /></label>
+        <label>QQ 号<input id="uQQ" inputmode="numeric" /></label>
+        <label>简介<textarea id="uBio" placeholder="写点啥都行"></textarea></label>
+        <div class="user-actions">
+          <button class="btn btn-primary" id="uSave">保存</button>
+          <button class="btn btn-ghost" id="uLogout">退出</button>
+        </div>
+        <p class="user-hint">资料只保存在本机浏览器。</p>
+      </div>
+      <p class="user-msg" id="userMsg"></p>
+    </div>
+  </div>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script src="site.js?v=3"></script>
+  <script src="pet.js?v=7"></script>
+  <script src="info.js?v=2"></script>
+  <script src="i18n.js?v=4"></script>
+</body>
+</html>
