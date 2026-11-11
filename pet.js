@@ -175,9 +175,12 @@
     /* still show, smaller */
   }
 
+  var big = document.body.getAttribute('data-pet') === 'big';
   var el = document.createElement('div');
-  el.className = 'float-pet';
-  el.style.cssText = 'position:fixed;right:22px;bottom:22px;width:96px;height:104px;z-index:880;';
+  el.className = 'float-pet' + (big ? ' big' : '');
+  el.style.cssText = big
+    ? 'position:fixed;right:22px;bottom:22px;width:160px;height:170px;z-index:880;'
+    : 'position:fixed;right:22px;bottom:22px;width:96px;height:104px;z-index:880;';
   el.setAttribute('role', 'button');
   el.setAttribute('tabindex', '0');
   el.setAttribute('aria-label', 'Claude pet');
@@ -206,9 +209,16 @@
 
   var petApi = avatar(el, img, bub);
 
-  /* drag */
+  if (big) {
+    el.addEventListener('click', function () { petApi.poke(); });
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); petApi.poke(); }
+    });
+  }
+
+  /* drag (small pet only) */
   var drag = { down: false, moved: false, sx: 0, sy: 0, ox: 0, oy: 0 };
-  el.addEventListener('pointerdown', function (e) {
+  if (!big) el.addEventListener('pointerdown', function (e) {
     if (e.button !== undefined && e.button !== 0) return;
     drag.down = true;
     drag.moved = false;
@@ -219,7 +229,7 @@
     drag.oy = e.clientY - r.top;
     try { el.setPointerCapture(e.pointerId); } catch (err) {}
   });
-  el.addEventListener('pointermove', function (e) {
+  if (!big) el.addEventListener('pointermove', function (e) {
     if (!drag.down) return;
     var dx = e.clientX - drag.sx;
     var dy = e.clientY - drag.sy;
@@ -234,7 +244,7 @@
     el.style.right = 'auto';
     el.style.bottom = 'auto';
   });
-  el.addEventListener('pointerup', function (e) {
+  if (!big) el.addEventListener('pointerup', function (e) {
     if (!drag.down) return;
     drag.down = false;
     if (!drag.moved) {
@@ -246,7 +256,7 @@
       } catch (err) {}
     }
   });
-  el.addEventListener('pointercancel', function () { drag.down = false; });
+  if (!big) el.addEventListener('pointercancel', function () { drag.down = false; });
 
   setTimeout(function () {
     var r = el.getBoundingClientRect();
