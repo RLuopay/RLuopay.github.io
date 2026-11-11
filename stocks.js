@@ -2,8 +2,8 @@
   'use strict';
 
   var PROXIES = [
-    function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
-    function (u) { return 'https://corsproxy.io/?url=' + encodeURIComponent(u); }
+    function (u) { return 'https://api.cors.lol/?url=' + encodeURIComponent(u); },
+    function (u) { return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
   ];
   var BASE = 'https://query1.finance.yahoo.com';
   var mem = {};
