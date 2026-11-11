@@ -30,67 +30,133 @@
 
     <div class="hero">
       <span class="eyebrow">Plugins</span>
-      <h1>公共插件<br /><span class="grad">好玩的那种</span></h1>
-      <p class="lead">平时收集的好玩插件，点名字去商店或官网自己看；装之前瞄一眼权限。</p>
+      <h1>公共插件<br /><span class="grad">AI 全家桶 + 好玩</span></h1>
+      <p class="lead">按分类收好，点卡片上的按钮就直接去安装或下载；装之前瞄一眼权限。</p>
     </div>
 
-    <section>
-      <div class="sec-head"><h2>插件清单</h2><span>持续更新</span></div>
+    <section class="plugin-group">
+      <div class="sec-head"><h2>DeepSeek 插件</h2><span>从 B 站和油猴找的</span></div>
       <div class="plugin-grid">
-        <a class="card plugin" href="https://www.tampermonkey.net/" target="_blank" rel="noopener">
+        <div class="card plugin">
+          <div class="plugin-ico">🧠</div>
+          <h3>DeepSeek 增强工具 <em class="tag">油猴脚本</em></h3>
+          <p>给 DeepSeek 网页加回溯、导出、快捷按钮等增强功能。</p>
+          <a class="btn btn-ghost plugin-btn" href="https://greasyfork.org/zh-CN/scripts/557232-deepseek-enhance-tools" target="_blank" rel="noopener">去安装 →</a>
+        </div>
+        <div class="card plugin">
+          <div class="plugin-ico">🐟</div>
+          <h3>大肥鱼 QQ 助手 <em class="tag">DSH 插件</em></h3>
+          <p>让 AI 以「大肥鱼」住进 QQ，表情、语音、记忆都有。</p>
+          <a class="btn btn-ghost plugin-btn" href="https://github.com/WangJiu-czy/dsh-aurabot" target="_blank" rel="noopener">去下载 →</a>
+        </div>
+        <div class="card plugin">
+          <div class="plugin-ico">📺</div>
+          <h3>大肥鱼 B站工作台 <em class="tag">DSH 插件</em></h3>
+          <p>让 DSH 角色记住经历、刷 B 站、复盘成长。</p>
+          <a class="btn btn-ghost plugin-btn" href="https://github.com/XiaoZheBrother/dsh-bilibili-dafeiyu" target="_blank" rel="noopener">去下载 →</a>
+        </div>
+        <div class="card plugin">
+          <div class="plugin-ico">🦉</div>
+          <h3>DeepSeek 官方网页 <em class="tag">官网</em></h3>
+          <p>没有扩展也能用，网页版直接聊，记得开联网搜索。</p>
+          <a class="btn btn-ghost plugin-btn" href="https://chat.deepseek.com/" target="_blank" rel="noopener">去官网 →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="plugin-group">
+      <div class="sec-head"><h2>Claude 插件</h2><span>官方 + 聚合</span></div>
+      <div class="plugin-grid">
+        <div class="card plugin">
+          <div class="plugin-ico">🟠</div>
+          <h3>Claude for Chrome <em class="tag hot">热门</em></h3>
+          <p>官方扩展，让 Claude 看你当前标签页、代你操作网页。</p>
+          <a class="btn btn-ghost plugin-btn" href="https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn" target="_blank" rel="noopener">去安装 →</a>
+        </div>
+        <div class="card plugin">
+          <div class="plugin-ico">🧰</div>
+          <h3>Sider · AI 侧边栏</h3>
+          <p>侧边栏里同时用 Claude、GPT、Gemini，还能读网页总结。</p>
+          <a class="btn btn-ghost plugin-btn" href="https://sider.ai/" target="_blank" rel="noopener">去官网 →</a>
+        </div>
+        <div class="card plugin">
+          <div class="plugin-ico">🪶</div>
+          <h3>Claude 网页版</h3>
+          <p>不想装扩展就用网页版，账号通用。</p>
+          <a class="btn btn-ghost plugin-btn" href="https://claude.ai/" target="_blank" rel="noopener">去官网 →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="plugin-group">
+      <div class="sec-head"><h2>ChatGPT 插件</h2><span>官方 + 聚合</span></div>
+      <div class="plugin-grid">
+        <div class="card plugin">
+          <div class="plugin-ico">💬</div>
+          <h3>ChatGPT for Chrome <em class="tag hot">热门</em></h3>
+          <p>官方扩展，能读你打开的标签页、帮你搜和写。</p>
+          <a class="btn btn-ghost plugin-btn" href="https://chromewebstore.google.com/detail/chatgpt/llojfncgbabajmdglnkbhmiebiinohek" target="_blank" rel="noopener">去安装 →</a>
+        </div>
+        <div class="card plugin">
+          <div class="plugin-ico">🌟</div>
+          <h3>Monica</h3>
+          <p>全能 AI 助手，聊天、翻译、写作、读网页一把抓。</p>
+          <a class="btn btn-ghost plugin-btn" href="https://monica.im/" target="_blank" rel="noopener">去官网 →</a>
+        </div>
+        <div class="card plugin">
+          <div class="plugin-ico">🔍</div>
+          <h3>ChatGPT 搜索</h3>
+          <p>把默认搜索引擎换成 ChatGPT 搜索，边搜边问。</p>
+          <a class="btn btn-ghost plugin-btn" href="https://chatgpt.com/" target="_blank" rel="noopener">去官网 →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="plugin-group">
+      <div class="sec-head"><h2>Gemini 插件</h2><span>官方</span></div>
+      <div class="plugin-grid">
+        <div class="card plugin">
+          <div class="plugin-ico">✨</div>
+          <h3>Gemini for Chrome <em class="tag hot">热门</em></h3>
+          <p>官方扩展，侧边栏随时喊 Gemini 总结或翻译当前页。</p>
+          <a class="btn btn-ghost plugin-btn" href="https://chromewebstore.google.com/detail/gemini/fppbiomdkfbhgjjdmojlogeceejinadg" target="_blank" rel="noopener">去安装 →</a>
+        </div>
+        <div class="card plugin">
+          <div class="plugin-ico">🌌</div>
+          <h3>Gemini 网页版</h3>
+          <p>网页版直接开，图片、代码、长文都能处理。</p>
+          <a class="btn btn-ghost plugin-btn" href="https://gemini.google.com/" target="_blank" rel="noopener">去官网 →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="plugin-group">
+      <div class="sec-head"><h2>热门插件</h2><span>上面几个分类里人气最高的</span></div>
+      <div class="plugin-grid">
+        <div class="card plugin">
+          <div class="plugin-ico">🌐</div>
+          <h3>沉浸式翻译 <em class="tag hot">热门</em></h3>
+          <p>网页、PDF、字幕双语对照，看外文站很舒服。</p>
+          <a class="btn btn-ghost plugin-btn" href="https://immersivetranslate.com/" target="_blank" rel="noopener">去安装 →</a>
+        </div>
+        <div class="card plugin">
           <div class="plugin-ico">🧩</div>
           <h3>Tampermonkey · 油猴</h3>
           <p>给网页加脚本，广告拦截、签到、改样式都行。</p>
-          <span class="plugin-go">去官网 →</span>
-        </a>
-        <a class="card plugin" href="https://immersivetranslate.com/" target="_blank" rel="noopener">
-          <div class="plugin-ico">🌐</div>
-          <h3>沉浸式翻译</h3>
-          <p>网页、PDF、字幕双语对照，看外文站很舒服。</p>
-          <span class="plugin-go">去官网 →</span>
-        </a>
-        <a class="card plugin" href="https://darkreader.org/" target="_blank" rel="noopener">
-          <div class="plugin-ico">🌙</div>
-          <h3>Dark Reader</h3>
-          <p>给所有网站套上夜间模式，晚上不刺眼。</p>
-          <span class="plugin-go">去官网 →</span>
-        </a>
-        <a class="card plugin" href="https://www.gofullpage.com/" target="_blank" rel="noopener">
-          <div class="plugin-ico">📸</div>
-          <h3>GoFullPage</h3>
-          <p>一键截整页长图，保存成 PNG 或 PDF。</p>
-          <span class="plugin-go">去官网 →</span>
-        </a>
-        <a class="card plugin" href="https://github.com/xifangczy/cat-catch" target="_blank" rel="noopener">
-          <div class="plugin-ico">🎣</div>
-          <h3>猫抓</h3>
-          <p>嗅探网页里的视频和音频，回放或下载都方便。</p>
-          <span class="plugin-go">去仓库 →</span>
-        </a>
-        <a class="card plugin" href="https://chromewebstore.google.com/detail/unscrew-it-a-fidget-exten/dfhmadnmogpmbcldepgnomaipngohikc" target="_blank" rel="noopener">
+          <a class="btn btn-ghost plugin-btn" href="https://www.tampermonkey.net/" target="_blank" rel="noopener">去安装 →</a>
+        </div>
+        <div class="card plugin">
           <div class="plugin-ico">🔩</div>
           <h3>Unscrew It</h3>
-          <p>把网页上的按钮、图片一颗颗拧下来，纯解压。</p>
-          <span class="plugin-go">去商店 →</span>
-        </a>
-        <a class="card plugin" href="https://chromewebstore.google.com/detail/touch-fish/eleccibpobdmpajkdogdelfekmfbplbe" target="_blank" rel="noopener">
-          <div class="plugin-ico">🐟</div>
-          <h3>Touch Fish</h3>
-          <p>把网页伪装成工作界面，偷偷看小说和视频。</p>
-          <span class="plugin-go">去商店 →</span>
-        </a>
-        <a class="card plugin" href="https://github.com/LYiHub/Card-master-browser-extension-public" target="_blank" rel="noopener">
-          <div class="plugin-ico">🃏</div>
-          <h3>Card-master</h3>
-          <p>把浏览器脚本做成卡牌游戏，还能用 AI 生成新卡。</p>
-          <span class="plugin-go">去仓库 →</span>
-        </a>
-        <a class="card plugin" href="https://www.paintbytext.com/" target="_blank" rel="noopener">
-          <div class="plugin-ico">🎨</div>
-          <h3>网页涂鸦</h3>
-          <p>直接在任意网页上画画、圈重点，截图前很有用。</p>
-          <span class="plugin-go">去看看 →</span>
-        </a>
+          <p>把网页元素一颗颗拧下来，纯解压小玩具。</p>
+          <a class="btn btn-ghost plugin-btn" href="https://chromewebstore.google.com/detail/unscrew-it-a-fidget-exten/dfhmadnmogpmbcldepgnomaipngohikc" target="_blank" rel="noopener">去安装 →</a>
+        </div>
+        <div class="card plugin">
+          <div class="plugin-ico">📸</div>
+          <h3>GoFullPage</h3>
+          <p>一键截整页长图，保存 PNG 或 PDF。</p>
+          <a class="btn btn-ghost plugin-btn" href="https://www.gofullpage.com/" target="_blank" rel="noopener">去安装 →</a>
+        </div>
       </div>
       <p class="note">清单来自网上收集，装之前留意权限和隐私，别乱给账号密码。</p>
     </section>
