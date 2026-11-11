@@ -208,6 +208,8 @@
   }
 
   var big = document.body.getAttribute('data-pet') === 'big';
+  if (!big) return; /* floating pet only on the recharge page */
+
   var el = document.createElement('div');
   el.className = 'float-pet' + (big ? ' big' : '');
   el.style.cssText = big
