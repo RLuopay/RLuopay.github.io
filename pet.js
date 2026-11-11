@@ -152,7 +152,18 @@
     hero.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pet.poke(); }
     });
-    window.petCelebrate = function () {
+    setTimeout(function () {
+    var r = el.getBoundingClientRect();
+    if (r.right < 8 || r.bottom < 8 || r.left > window.innerWidth - 8 || r.top > window.innerHeight - 8 || r.width === 0) {
+      el.style.left = 'auto';
+      el.style.top = 'auto';
+      el.style.right = '22px';
+      el.style.bottom = '22px';
+      try { localStorage.removeItem('claudePetPos'); } catch (e) {}
+    }
+  }, 800);
+
+  window.petCelebrate = function () {
       var t = HAPPY[curLang()] || HAPPY['zh-Hans'];
       pet.say(pick(t));
     };
@@ -166,6 +177,7 @@
 
   var el = document.createElement('div');
   el.className = 'float-pet';
+  el.style.cssText = 'position:fixed;right:22px;bottom:22px;width:96px;height:104px;z-index:880;';
   el.setAttribute('role', 'button');
   el.setAttribute('tabindex', '0');
   el.setAttribute('aria-label', 'Claude pet');
@@ -179,7 +191,10 @@
   /* restore saved position */
   try {
     var pos = JSON.parse(localStorage.getItem('claudePetPos') || 'null');
-    if (pos && typeof pos.x === 'number') {
+    var inView = pos && typeof pos.x === 'number' &&
+      pos.x > -10 && pos.y > -10 &&
+      pos.x < window.innerWidth - 40 && pos.y < window.innerHeight - 40;
+    if (inView) {
       el.style.left = pos.x + 'px';
       el.style.top = pos.y + 'px';
       el.style.right = 'auto';
@@ -232,6 +247,17 @@
     }
   });
   el.addEventListener('pointercancel', function () { drag.down = false; });
+
+  setTimeout(function () {
+    var r = el.getBoundingClientRect();
+    if (r.right < 8 || r.bottom < 8 || r.left > window.innerWidth - 8 || r.top > window.innerHeight - 8 || r.width === 0) {
+      el.style.left = 'auto';
+      el.style.top = 'auto';
+      el.style.right = '22px';
+      el.style.bottom = '22px';
+      try { localStorage.removeItem('claudePetPos'); } catch (e) {}
+    }
+  }, 800);
 
   window.petCelebrate = function () {
     var t = HAPPY[curLang()] || HAPPY['zh-Hans'];
