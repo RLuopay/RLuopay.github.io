@@ -224,7 +224,9 @@
         })
           .then(function (r) { return r.json(); })
           .then(function (res) {
-            if (!res.success) throw new Error(res.message || 'fail');
+            if (!(res.ok === true || res.success === true || res.success === 'true')) {
+              throw new Error(res.error || res.message || 'fail');
+            }
             form.style.display = 'none';
             if (sent) { sent.hidden = false; sent.textContent = '收到啦～谢谢你！'; }
           })
