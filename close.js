@@ -18,6 +18,17 @@
     return next();
   }
 
+
+  var SNAP = null;
+  function snapKey(sym) { return sym.replace('^', '').replace(/[=.]/g, '_'); }
+  function loadSnapshot() {
+    if (SNAP) return Promise.resolve(SNAP);
+    return fetch('assets/data/snapshot.json', { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { SNAP = d; return d; })
+      .catch(function () { return null; });
+  }
+
   var INDEXES = [
     ['标普 500', '^GSPC'],
     ['纳斯达克', '^IXIC'],
@@ -38,7 +49,14 @@
         var pct = prev && price ? (price - prev) / prev * 100 : 0;
         return { name: name, sym: sym, price: price, pct: pct };
       })
-      .catch(function () { return { name: name, sym: sym, price: null, pct: 0, failed: true }; });
+      .catch(function () {
+        return loadSnapshot().then(function (snap) {
+          var item = snap && snap[snapKey(sym)];
+          if (!item || item.price == null) return { name: name, sym: sym, price: null, pct: 0, failed: true };
+          var pct = item.prev ? (item.price - item.prev) / item.prev * 100 : 0;
+          return { name: name, sym: sym, price: item.price, pct: pct, stale: true };
+        });
+      });
   }
 
   var canvas = document.getElementById('closeCanvas');
