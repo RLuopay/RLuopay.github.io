@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>模拟投资 · Claude 小站</title>
+<meta name="description" content="股票与汇率的模拟投资，虚拟资金。" />
+<link rel="stylesheet" href="style.css?v=18" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header>
+    <a class="brand" href="index.html"><span class="mark">◈</span> Claude 小站</a>
+    <nav>
+      <a href="recharge.html">充值</a>
+      <a href="logs.html">日志</a>
+      <a href="stocks.html">行情</a>
+      <a href="sim.html" class="active">模拟</a>
+      <a href="close.html">收盘</a>
+    </nav>
+    <div class="user-area" id="userArea">
+      <button class="user-btn" id="userBtn" aria-haspopup="dialog">登录</button>
+    </div>
+  </header>
+
+  <main>
+    <a class="back" href="index.html">← 返回首页</a>
+
+    <div class="hero">
+      <span class="eyebrow">Paper Trading</span>
+      <h1>练手用，别当真<br /><span class="grad">股票 · 汇率 · 杠杆</span></h1>
+      <p class="lead">虚拟资金 10 万。股票不加杠杆（现金可以变负），汇率可加杠杆；保证金率太低会被强制平仓。</p>
+    </div>
+
+    <section class="card account-card">
+      <div class="account-top">
+        <div class="account-nums">
+          <div class="acct-num"><span>现金</span><b id="acctCash">¥ 100,000</b></div>
+          <div class="acct-num"><span>持仓保证金</span><b id="acctMargin">¥ 0</b></div>
+          <div class="acct-num"><span>总资产</span><b id="acctEquity">¥ 100,000</b></div>
+          <div class="acct-num"><span>总盈亏</span><b id="acctPnl">¥ 0</b></div>
+        </div>
+        <div class="account-mood" id="acctMood">
+          <img id="moodImg" src="assets/sim/earn.webp" alt="盈利" />
+        </div>
+      </div>
+      <div class="account-actions">
+        <button class="btn btn-ghost" id="resetSim">重置账户</button>
+        <span class="account-hint">现金变负表示你借钱在买，现实中会收利息。</span>
+      </div>
+    </section>
+
+    <div class="sim-tabs" id="simTabs">
+      <button data-tab="stock" class="on">股票投资</button>
+      <button data-tab="fx">汇率投资</button>
+    </div>
+
+    <section class="card sim-pane" id="paneStock">
+      <div class="sim-row">
+        <label class="sim-field">标的
+          <select id="stockSel">
+            <option value="AAPL">AAPL · 苹果</option>
+            <option value="TSLA">TSLA · 特斯拉</option>
+            <option value="NVDA">NVDA · 英伟达</option>
+            <option value="MSFT">MSFT · 微软</option>
+            <option value="000001.SS">000001.SS · 上证指数</option>
+            <option value="^GSPC">^GSPC · 标普 500</option>
+            <option value="BTC-USD">BTC-USD · 比特币</option>
+          </select>
+        </label>
+        <div class="sim-price"><span id="stockPriceLabel">现价</span><b id="stockPrice">--</b></div>
+      </div>
+      <label class="sim-field">数量（股）<input id="stockQty" type="number" value="10" min="1" step="1" /></label>
+      <div class="sim-actions">
+        <button class="btn btn-primary" id="stockBuy">买入</button>
+        <button class="btn btn-ghost" id="stockSell">卖出</button>
+      </div>
+      <p class="sim-note" id="stockHint">股票全额买入，不加杠杆；卖出可以卖空，现金可能变负。</p>
+    </section>
+
+    <section class="card sim-pane" id="paneFx" hidden>
+      <div class="sim-row">
+        <label class="sim-field">标的
+          <select id="fxSel">
+            <option value="CNY=X">USD / CNY</option>
+            <option value="EURCNY=X">EUR / CNY</option>
+            <option value="JPYCNY=X">JPY / CNY</option>
+            <option value="HKDCNY=X">HKD / CNY</option>
+          </select>
+        </label>
+        <div class="sim-price"><span>现价</span><b id="fxPrice">--</b></div>
+      </div>
+      <div class="dir-switch" id="fxDir">
+        <button data-dir="long" class="on">做多</button>
+        <button data-dir="short">做空</button>
+      </div>
+      <label class="sim-field">保证金（¥）<input id="fxMargin" type="number" value="1000" min="10" step="100" /></label>
+      <label class="sim-field">杠杆 <b id="fxLevVal">10×</b>
+        <input id="fxLev" type="range" min="1" max="500" value="10" />
+      </label>
+      <div class="sim-hint" id="fxHint"></div>
+      <div class="sim-actions">
+        <button class="btn btn-primary" id="fxOpen">开仓</button>
+      </div>
+    </section>
+
+    <section class="positions-wrap">
+      <div class="sec-head"><h2>持仓</h2><span id="posMeta">保证金率低于 20% 会被强平</span></div>
+      <div class="positions" id="positions">还没有持仓</div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© <span id="year">2026</span> Claude 小站</span>
+    <span>模拟盘仅供娱乐，不构成任何投资建议。</span>
+  </footer>
+
+  <div class="rotate-tip" aria-hidden="true">
+    <div class="rotate-box">
+      <div class="rotate-icon">↻</div>
+      <p>把手机横过来用呀～</p>
+      <span>横屏之后内容更舒服</span>
+    </div>
+  </div>
+
+  <div class="user-modal" id="userModal" hidden>
+    <div class="user-panel" role="dialog" aria-modal="true" aria-label="账号与资料">
+      <button class="user-close" id="userClose" aria-label="关闭">×</button>
+      <div id="loginBox">
+        <h3>登录 / 注册</h3>
+        <label>昵称<input id="lName" autocomplete="nickname" placeholder="随便取一个" /></label>
+        <label>密码<input id="lPass" type="password" autocomplete="current-password" placeholder="本机保存，不加密" /></label>
+        <div class="user-actions"><button class="btn btn-primary" id="loginGo">登录</button></div>
+        <p class="user-hint">账号只存在这台设备的浏览器里，换设备就没了。</p>
+      </div>
+      <div id="profileBox" hidden>
+        <h3>我的资料</h3>
+        <label>头像
+          <select id="uAvatar">
+            <option value="🙂">🙂</option><option value="😺">😺</option><option value="🐶">🐶</option>
+            <option value="🐰">🐰</option><option value="🦊">🦊</option><option value="🐼">🐼</option>
+            <option value="🐳">🐳</option><option value="🌸">🌸</option><option value="⭐">⭐</option>
+          </select>
+        </label>
+        <label>昵称<input id="uName" /></label>
+        <label>QQ 号<input id="uQQ" inputmode="numeric" /></label>
+        <label>简介<textarea id="uBio" placeholder="写点啥都行"></textarea></label>
+        <div class="user-actions">
+          <button class="btn btn-primary" id="uSave">保存</button>
+          <button class="btn btn-ghost" id="uLogout">退出</button>
+        </div>
+        <p class="user-hint">资料只保存在本机浏览器。</p>
+      </div>
+      <p class="user-msg" id="userMsg"></p>
+    </div>
+  </div>
+
+  <script src="site.js?v=1"></script>
+  <script src="sim.js?v=1"></script>
+</body>
+</html>
