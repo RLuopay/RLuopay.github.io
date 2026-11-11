@@ -9,7 +9,12 @@
   btn.type = 'button';
   btn.className = 'info-btn';
   btn.textContent = '说明';
-  brand.insertAdjacentElement('afterend', btn);
+
+  var wrap = document.createElement('div');
+  wrap.className = 'brand-wrap';
+  brand.parentNode.insertBefore(wrap, brand);
+  wrap.appendChild(brand);
+  wrap.appendChild(btn);
 
   var mask = document.createElement('div');
   mask.className = 'info-mask';
