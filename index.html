@@ -78,21 +78,10 @@
       <div class="card feedback-card">
         <form action="https://formspree.io/f/xzerbron" method="POST" id="feedbackForm">
           <input type="hidden" name="_subject" value="Claude 小站 · 用户反馈" />
-          <div class="fb-row">
-            <label>称呼（可选）<input name="name" placeholder="怎么称呼你" /></label>
-            <label>类型
-              <select name="type">
-                <option value="建议">建议</option>
-                <option value="Bug 反馈">Bug 反馈</option>
-                <option value="其他">其他</option>
-              </select>
-            </label>
-          </div>
-          <label>内容 <textarea name="message" required placeholder="想到什么就写，bug 的话说一下在哪个页面～"></textarea></label>
-          <label>你的邮箱（可选，想收到回复就填）<input type="email" name="email" placeholder="you@example.com" /></label>
+          <label>内容 <textarea name="message" required placeholder="想说什么都行，bug 也可以～"></textarea></label>
           <div class="fb-actions">
             <button class="btn btn-primary" type="submit">发送</button>
-            <span class="fb-hint">会直接发到小站主人的邮箱</span>
+            <span class="fb-hint">直接发到小站主人的邮箱</span>
           </div>
         </form>
         <div class="fb-sent" id="fbSent" hidden>收到啦～谢谢你！</div>
@@ -227,8 +216,12 @@
             if (!(res.ok === true || res.success === true || res.success === 'true')) {
               throw new Error(res.error || res.message || 'fail');
             }
-            form.style.display = 'none';
-            if (sent) { sent.hidden = false; sent.textContent = '收到啦～谢谢你！'; }
+            msg.style.color = 'var(--green)';
+            msg.textContent = '收到啦～还能继续发。';
+            form.reset();
+            btn.disabled = false;
+            btn.textContent = old;
+            setTimeout(function () { msg.textContent = ''; msg.style.color = ''; }, 3200);
           })
           .catch(function () {
             btn.disabled = false;
@@ -238,8 +231,8 @@
       });
 
       if (!/[?&]sent=1/.test(location.search)) return;
-      if (sent) sent.hidden = false;
-      form.style.display = 'none';
+      msg.style.color = 'var(--green)';
+      msg.textContent = '收到啦～谢谢你！';
     })();
   </script>
   <script src="site.js?v=3"></script>
