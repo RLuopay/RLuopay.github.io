@@ -911,3 +911,23 @@ footer {
 @media (max-width: 640px) {
   .plugin { flex-basis: 220px; }
 }
+
+/* visitor counter pill */
+.visitor-pill {
+  position: fixed; right: 20px; bottom: 20px; z-index: 870;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.42rem 0.78rem; border-radius: 999px;
+  border: 1px solid var(--line-soft); background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  box-shadow: 0 10px 24px -18px rgba(27, 26, 25, 0.5);
+  font-size: 0.74rem; color: var(--muted); user-select: none;
+}
+.visitor-pill b { color: var(--fg); font-weight: 600; font-variant-numeric: tabular-nums; }
+.visitor-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+  box-shadow: 0 0 0 3px rgba(47, 125, 79, 0.15);
+}
+.visitor-sep { color: var(--line); }
+@media (max-width: 640px) {
+  .visitor-pill { right: 12px; bottom: 12px; font-size: 0.7rem; padding: 0.36rem 0.64rem; }
+}
