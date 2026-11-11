@@ -614,3 +614,16 @@ footer {
   .hours-row { grid-template-columns: 1fr 0.8fr 0.8fr; }
   .hours-row span:last-child { display: none; }
 }
+
+/* ---- language switcher ---- */
+.lang-switch {
+  display: flex; gap: 2px; margin-right: 0.7rem;
+  border: 1px solid var(--line); border-radius: 999px; padding: 2px; background: #FCFBFA;
+}
+.lang-switch button {
+  border: none; background: none; font-family: inherit;
+  font-size: 0.72rem; padding: 0.24rem 0.5rem; border-radius: 999px;
+  color: var(--muted); cursor: pointer; line-height: 1.4;
+}
+.lang-switch button.on { background: var(--accent); color: #FAF9F7; }
+@media (max-width: 640px) { .lang-switch { margin-right: 0.4rem; } }
