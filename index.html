@@ -76,10 +76,8 @@
     <section class="feedback" id="feedback">
       <div class="sec-head"><h2>留个话</h2><span>建议或 bug 都行</span></div>
       <div class="card feedback-card">
-        <form action="https://api.web3forms.com/submit" method="POST" id="feedbackForm">
-          <input type="hidden" name="access_key" value="010d0bc8-f0d3-4432-bc47-7e09a82eda1c" />
-          <input type="hidden" name="subject" value="Claude 小站 · 用户反馈" />
-          <input type="hidden" name="from_name" value="Claude 小站" />
+        <form action="https://formspree.io/f/xzerbron" method="POST" id="feedbackForm">
+          <input type="hidden" name="_subject" value="Claude 小站 · 用户反馈" />
           <div class="fb-row">
             <label>称呼（可选）<input name="name" placeholder="怎么称呼你" /></label>
             <label>类型
@@ -219,7 +217,7 @@
         var old = btn.textContent;
         btn.textContent = '发送中…';
         msg.textContent = '';
-        fetch('https://api.web3forms.com/submit', {
+        fetch('https://formspree.io/f/xzerbron', {
           method: 'POST',
           headers: { 'Accept': 'application/json' },
           body: fd
