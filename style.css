@@ -754,3 +754,16 @@ footer {
   .emoji-layout { grid-template-columns: 1fr; }
   .emoji-preview { position: static; }
 }
+
+/* ---- reward QR ---- */
+.reward-box {
+  display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;
+  padding: 1.6rem; border-radius: 16px; border: 1px solid var(--line-soft);
+  background: #FFFFFF;
+}
+.reward-box img {
+  width: 260px; max-width: 70vw; height: auto; border-radius: 12px; display: block;
+}
+.reward-tip { flex: 1; min-width: 200px; }
+.reward-tip p { margin: 0 0 0.6rem; color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
+.reward-small { font-size: 0.8rem !important; }
