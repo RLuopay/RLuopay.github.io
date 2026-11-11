@@ -253,6 +253,11 @@
     pnlEl.textContent = (pnlSum >= 0 ? '+' : '') + money(pnlSum);
     pnlEl.className = pnlSum >= 0 ? 'up' : 'down';
 
+    var moodImg = document.getElementById('moodImg');
+    if (moodImg) {
+      moodImg.src = pnlSum >= 0 ? 'assets/sim/earn.webp' : 'assets/sim/loss.webp';
+      moodImg.alt = pnlSum >= 0 ? '盈利' : '亏损';
+    }
 
     var box = document.getElementById('positions');
     if (!account.lots.length) {
@@ -269,7 +274,6 @@
       var dirTxt = l.kind === 'stock' ? (l.dir === 'long' ? '买入' : '卖空') : (l.dir === 'long' ? '多' : '空');
       var levTxt = l.kind === 'stock' ? '' : ' ' + l.lev + '×';
       el.innerHTML =
-        '<img class="pos-mood" src="' + (pnl >= 0 ? 'assets/sim/earn.webp' : 'assets/sim/loss.webp') + '" alt="' + (pnl >= 0 ? '盈利' : '亏损') + '" />' +
         '<div class="pos-top"><b>' + l.symbol + '</b><span class="pos-dir ' + l.dir + '">' +
         dirTxt + levTxt + '</span></div>' +
         '<div class="pos-line">' + (l.kind === 'stock' ? l.qty + ' 股' : '名义 ' + (l.qty * l.entry).toFixed(0)) +
