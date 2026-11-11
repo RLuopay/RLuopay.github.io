@@ -871,3 +871,7 @@ footer {
   .info-panel { padding: 1.2rem; }
   .info-item { font-size: 0.8rem; }
 }
+
+/* brand + info button grouped on the left */
+.brand-wrap { display: flex; align-items: center; gap: 0.5rem; }
+.brand-wrap .info-btn { margin-left: 0; }
